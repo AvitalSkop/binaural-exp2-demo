@@ -140,6 +140,13 @@ for name, block, nb in (("separation", results["separation"], 4), ("input_sir", 
               "separation: 2 requests per mixture, mixtures sum to 192")
     else:
         check(all(s["n_requests"] == s["n_mixtures"] for s in c), "input SIR: 1 request per mixture per bin")
+ov = results["overall"]
+check(ov["set"] == "valgrid" and ov["step"] == 160000 and sorted(ov["values"]) == sorted(MODELS), "overall: valgrid, 160k, five models")
+check(all(all(finite(v[k]) for k in ("si_sdr", "si_sdri", "si_sir", "si_sar", "success", "W", "ild_error_db", "itd_error_us"))
+          and (v["n_mixtures"], v["n_requests"], v["n_decomp_requests"]) == (vg["n_mixtures"], vg["n_requests"], vg["n_requests"])
+          and 0 <= v["W"] <= v["success"] <= 1 for v in ov["values"].values()), "overall: complete values, 192 / 384, W <= success")
+check(all(abs(ov["values"][m]["si_sdri"] - sum(s["si_sdri"] * s["n_mixtures"] for s in results["separation"]["values"][m]) / vg["n_mixtures"]) < 1e-3
+          for m in MODELS), "overall SI-SDRi = mixture-weighted mean of the separation bins")
 check(training["steps"] == STEPS and training["set"] == "valsep64", "training: measured checkpoints 20k/40k/80k/120k/160k only")
 check(all(len(training["values"][m]) == len(STEPS) and all(s["n_requests"] == vs["n_requests"] and s["n_mixtures"] == vs["n_mixtures"]
           for s in training["values"][m]) for m in MODELS), "training: 128 requests / 64 mixtures at every step, every model")

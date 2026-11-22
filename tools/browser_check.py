@@ -121,6 +121,9 @@ async def run(url, out, dark, report):
                 legendOrder: document.querySelector('[data-legend]').textContent.replace(/\s+/g, ' ').trim(),
                 featured: document.querySelectorAll('.featured, .step, .tile.feat, .star').length,
                 bestCells: document.querySelectorAll('#example-041 td.best').length,
+                overallRows: [...document.querySelectorAll('.overall-table tbody tr')].map(r => r.querySelector('b').textContent).join(' '),
+                overallBest: [...document.querySelectorAll('.overall-table td.best')].map(td => [...td.parentNode.children].indexOf(td) + ':' + td.parentNode.querySelector('b').textContent).join(' '),
+                overallOverflow: Math.max(0, ...[...document.querySelectorAll('.overall .table-wrap')].map(w => w.scrollWidth - w.clientWidth)),
                 tableOverflow: Math.max(0, ...[...document.querySelectorAll('details[open] .table-wrap')].map(w => w.scrollWidth - w.clientWidth)),
                 geoWidth: Math.round(document.querySelector('#example-041 .geometry svg').getBoundingClientRect().width) })""")
             report[f"{mode}/{name}/dom"] = dom

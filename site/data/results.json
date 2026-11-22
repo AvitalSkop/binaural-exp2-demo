@@ -4,6 +4,77 @@
   "si_sir": "SI-SIR (dB)",
   "si_sar": "SI-SAR (dB)"
  },
+ "overall": {
+  "set": "valgrid",
+  "step": 160000,
+  "values": {
+   "C": {
+    "ild_error_db": 0.5745,
+    "itd_error_us": 3.2413,
+    "si_sdr": -2.5524,
+    "si_sdri": 7.1222,
+    "si_sir": 15.7507,
+    "si_sar": -0.7715,
+    "success": 0.8255,
+    "W": 0.6562,
+    "n_mixtures": 192,
+    "n_requests": 384,
+    "n_decomp_requests": 384
+   },
+   "F": {
+    "ild_error_db": 0.5201,
+    "itd_error_us": 2.1927,
+    "si_sdr": -0.9914,
+    "si_sdri": 8.6832,
+    "si_sir": 18.4952,
+    "si_sar": 0.2172,
+    "success": 0.8906,
+    "W": 0.7865,
+    "n_mixtures": 192,
+    "n_requests": 384,
+    "n_decomp_requests": 384
+   },
+   "B": {
+    "ild_error_db": 0.5387,
+    "itd_error_us": 2.2665,
+    "si_sdr": -1.4709,
+    "si_sdri": 8.2038,
+    "si_sir": 16.6801,
+    "si_sar": -0.2142,
+    "success": 0.8828,
+    "W": 0.776,
+    "n_mixtures": 192,
+    "n_requests": 384,
+    "n_decomp_requests": 384
+   },
+   "D": {
+    "ild_error_db": 0.6362,
+    "itd_error_us": 3.5549,
+    "si_sdr": -1.9122,
+    "si_sdri": 7.7624,
+    "si_sir": 17.5291,
+    "si_sar": -0.1192,
+    "success": 0.8646,
+    "W": 0.7344,
+    "n_mixtures": 192,
+    "n_requests": 384,
+    "n_decomp_requests": 384
+   },
+   "E1": {
+    "ild_error_db": 0.6665,
+    "itd_error_us": 2.3142,
+    "si_sdr": -1.2845,
+    "si_sdri": 8.3901,
+    "si_sir": 19.9859,
+    "si_sar": -0.4204,
+    "success": 0.9193,
+    "W": 0.8438,
+    "n_mixtures": 192,
+    "n_requests": 384,
+    "n_decomp_requests": 384
+   }
+  }
+ },
  "separation": {
   "set": "valgrid",
   "step": 160000,

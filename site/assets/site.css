@@ -195,3 +195,11 @@ details.defs dd { margin: 0 0 .2rem; }
 .short { display: none; }
 @media (max-width: 560px) { .short { display: inline; } }
 @media (max-width: 560px) { .ex-body { padding: 12px 10px 14px; } }
+
+.sub-h { font-size: 1.02rem; margin: 18px 0 8px; }
+.overall .table-wrap { margin-top: 0; }
+.overall-table th, .overall-table td { padding: 7px 9px; }
+.overall-table th:first-child, .overall-table td:first-child { position: sticky; left: 0; background: var(--bg); z-index: 1; }
+.scroll-hint { display: none; font-size: .78rem; color: var(--muted); margin: 0 0 4px; }
+@media (max-width: 760px) { .scroll-hint { display: block; } .overall-table td:first-child { box-shadow: 1px 0 0 var(--line); } }
+.ov-cap { margin: 8px 0 0; font-size: .8rem; max-width: 900px; }

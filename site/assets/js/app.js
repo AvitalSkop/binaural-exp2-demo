@@ -10,6 +10,9 @@ const TIPS = {
   si_sdri: "SI-SDR improvement: SI-SDR of the estimate minus SI-SDR of the unprocessed mixture, against the same reference.",
   si_sir: "Least-squares decomposition of the estimate onto the near-anechoic images of the requested and the interfering speaker: energy of the target part over energy of the interferer part, in dB.",
   si_sar: "Same decomposition: energy of the target and interferer parts over the remaining error, in dB. Residual reverberation and processing artefacts count as error.",
+  W: "Share of mixtures for which both requests (s1 and s2) meet the target-selected criterion.",
+  ild_error_db: "Absolute difference between the broadband interaural level difference (ILD) of the estimate and of the near-anechoic target, in dB. Lower is better.",
+  itd_error_us: "Absolute difference between the broadband interaural time difference (ITD, GCC-PHAT within ±1 ms) of the estimate and of the near-anechoic target, in microseconds. Lower is better.",
   success: "Target selected: the estimate is closer (in SI-SDR) to the requested speaker than to the interfering speaker, improves on the mixture (SI-SDRi > 0), and that closeness margin is larger than in the unprocessed mixture. It is a numerical criterion and does not guarantee a perceptually clean extraction.",
 };
 
@@ -34,6 +37,26 @@ function metricsTable(ex, target, models, activeRole) {
     <tbody>${rows.join("")}</tbody>
     <caption>dB against the near-anechoic target, so values near or below 0 dB are expected (mixture ${fmt(t.mixture_si_sdr, 1)} dB).
       <b>Bold</b>: highest value in each column, not a perceptual ranking.</caption></table></div>`;
+}
+
+function overallTable(ov, models) {
+  const cols = [["si_sdr", "SI-SDR", 2, 1], ["si_sdri", "SI-SDRi", 2, 1], ["si_sir", "SI-SIR", 2, 1], ["si_sar", "SI-SAR", 2, 1],
+    ["success", "Target selected", "%", 1], ["W", "Both targets", "%", 1], ["ild_error_db", "ILD error", 2, -1], ["itd_error_us", "ITD error", 1, -1]];
+  const show = (v, d) => (d === "%" ? Number((100 * v).toFixed(1)) : Number(v.toFixed(d)));
+  const txt = (v, d, k) => (d === "%" ? `${(100 * v).toFixed(1)}%` : fmt(v, d, k === "si_sdri"));
+  const best = Object.fromEntries(cols.map(([k, , d, dir]) => [k, (dir > 0 ? Math.max : Math.min)(...models.map((m) => show(ov.values[m.key][k], d)))]));
+  const head = cols.map(([k, label]) => `<th scope="col"><span class="th">${label.replace("-", "\u2011")}${info(label, TIPS[k])}</span></th>`).join("");
+  const rows = models.map((m) => {
+    const r = ov.values[m.key];
+    return `<tr><td><span class="model">${chip(m.key)}<b>${m.key}</b><span class="mname">&nbsp;${m.name}</span></span></td>${cols.map(([k, , d]) =>
+      show(r[k], d) === best[k] ? `<td class="best"><b>${txt(r[k], d, k)}</b><span class="sr"> (best)</span></td>` : `<td>${txt(r[k], d, k)}</td>`).join("")}</tr>`;
+  }).join("");
+  const c = ov.values[models[0].key];
+  return `<h3 class="sub-h">Overall</h3><p class="scroll-hint">Swipe the table sideways for all metrics →</p><div class="table-wrap"><table class="overall-table">
+    <thead><tr><th scope="col">Model</th>${head}</tr></thead><tbody>${rows}</tbody></table></div>
+    <p class="caption ov-cap">valgrid, ${c.n_mixtures} mixtures / ${c.n_requests} target requests, 160,000 training steps; means over mixtures (each mixture's two requests averaged first).
+      SI metrics in dB against the near-anechoic target; ILD error in dB, ITD error in µs (lower is better). <b>Bold</b>: best value in each column;
+      many differences are within the uncertainty given in the evaluation protocol.</p>`;
 }
 
 function renderExample(ex, models, open) {
@@ -108,6 +131,7 @@ async function main() {
   document.querySelector("[data-results-intro]").innerHTML =
     `<b>valgrid</b> development set: ${vg.n_mixtures} mixtures, ${vg.n_requests} target requests (s1 and s2 of each mixture), 160,000 training steps.
      Points are measured bin means.`;
+  document.getElementById("overall").innerHTML = overallTable(results.overall, models);
   const mlabel = (k) => results.metrics[k];
   const sep = results.separation, sir = results.input_sir;
   const sepChart = new LineChart(document.getElementById("chart-separation"), {
@@ -170,6 +194,8 @@ async function main() {
       <dt>SI-SDR, SI-SDRi</dt><dd>${TIPS.si_sdr} ${TIPS.si_sdri}</dd>
       <dt>SI-SIR, SI-SAR</dt><dd>${TIPS.si_sir} ${TIPS.si_sar}</dd>
       <dt>Target selected</dt><dd>${TIPS.success.replace("Target selected: ", "")}</dd>
+      <dt>Both targets</dt><dd>${TIPS.W}</dd>
+      <dt>ILD and ITD error</dt><dd>${TIPS.ild_error_db} ${TIPS.itd_error_us}</dd>
       <dt>Aggregation</dt><dd>Within a bin, a mixture's requests are averaged first, then the mixtures. SI-SIR and SI-SAR use
         requests with a positive target coefficient (all requests in the results shown).</dd>
       <dt>Listening examples</dt><dd>Selected by listening to illustrate specific behaviours (valsep64, 160,000 steps); they are
