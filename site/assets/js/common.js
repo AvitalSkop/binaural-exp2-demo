@@ -59,6 +59,28 @@ export function segmented(container, options, value, onChange, label) {
   return seg;
 }
 
+const SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3M4.6 4.6l2.1 2.1M17.3 17.3l2.1 2.1M4.6 19.4l2.1-2.1M17.3 6.7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+const MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z" fill="currentColor"/></svg>';
+
+/** Light / dark toggle: sets data-theme on <html> (the CSS defines both); remembered per browser when storage works. */
+export function initThemeToggle(button) {
+  const root = document.documentElement, media = window.matchMedia("(prefers-color-scheme: dark)");
+  const current = () => root.getAttribute("data-theme") || (media.matches ? "dark" : "light");
+  const render = () => {
+    const next = current() === "dark" ? "light" : "dark";
+    button.innerHTML = `${next === "dark" ? MOON : SUN}<span>${next === "dark" ? "Dark" : "Light"} mode</span>`;
+    button.setAttribute("aria-label", `Switch to ${next} mode`);
+  };
+  button.addEventListener("click", () => {
+    const next = current() === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem("theme", next); } catch (_) { /* storage unavailable: theme lasts for this page view */ }
+    render();
+  });
+  media.addEventListener?.("change", render);
+  render();
+}
+
 /** One global tooltip for elements with data-tip (hover, keyboard focus, tap). */
 export function initTips() {
   const box = h("div", { class: "tipbox", id: "tipbox", role: "tooltip", hidden: true });

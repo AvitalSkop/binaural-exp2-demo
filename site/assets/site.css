@@ -34,6 +34,11 @@ a { color: inherit; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .site-header { border-bottom: 1px solid var(--line); padding: 34px 0 18px; }
+.topbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.theme-toggle { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: var(--card); color: var(--ink2);
+  border-radius: 999px; padding: 6px 12px; min-height: 36px; font: inherit; font-size: .85rem; cursor: pointer; white-space: nowrap; flex: none; }
+.theme-toggle:hover { color: var(--ink); border-color: var(--ink2); }
+.theme-toggle svg { width: 16px; height: 16px; }
 .eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: .75rem; color: var(--muted); margin: 0; }
 .lede { color: var(--ink2); max-width: 720px; margin: 0 0 .7rem; }
 .headphones { display: inline-flex; gap: 8px; align-items: center; color: var(--ink2); font-size: .9rem; margin: 0 0 .9rem; }

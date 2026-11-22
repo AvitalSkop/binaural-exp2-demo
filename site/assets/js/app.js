@@ -1,4 +1,4 @@
-import { MODEL_KEYS, chip, fmt, fmtDeg, h, info, initTips, legendHTML, segmented } from "./common.js";
+import { MODEL_KEYS, chip, fmt, fmtDeg, h, info, initThemeToggle, initTips, legendHTML, segmented } from "./common.js";
 import { geometrySVG } from "./geometry.js";
 import { ExamplePlayer } from "./player.js";
 import { LineChart } from "./charts.js";
@@ -92,6 +92,7 @@ function metricOptions(metrics) { return Object.entries(metrics).map(([k, v]) =>
 
 async function main() {
   initTips();
+  initThemeToggle(document.getElementById("theme-toggle"));
   const [meta, examples, results, training] = await Promise.all(
     ["meta", "examples", "results", "training"].map((n) => getJSON(`data/${n}.json`)));
   if ([...meta.models.map((m) => m.key)].sort().join() !== [...MODEL_KEYS].sort().join()) throw new Error("unexpected model list");

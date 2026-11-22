@@ -126,6 +126,22 @@ async def run(url, out, dark, report):
             report[f"{mode}/{name}/dom"] = dom
             if name == "desktop" and not dark:
                 ex = "#example-041"
+                state = "JSON.stringify({theme: document.documentElement.getAttribute('data-theme'), bg: getComputedStyle(document.body).backgroundColor, label: document.getElementById('theme-toggle').getAttribute('aria-label')})"
+                t0 = await b.js(ctx, state)
+                await b.click(ctx, "#theme-toggle")
+                await asyncio.sleep(0.3)
+                t1 = await b.js(ctx, state)
+                await b.cmd("browsingContext.reload", context=ctx, wait="complete")
+                await asyncio.sleep(1.0)
+                t2 = await b.js(ctx, state)
+                await b.click(ctx, "#theme-toggle")
+                await asyncio.sleep(0.3)
+                t3 = await b.js(ctx, state)
+                report["theme_toggle"] = {"initial": t0, "after_click": t1, "after_reload": t2, "after_second_click": t3}
+                for _ in range(50):
+                    if await b.js(ctx, "!document.querySelector('#example-041 .play').disabled"):
+                        break
+                    await asyncio.sleep(0.2)
                 await b.click(ctx, f"{ex} .play")
                 await asyncio.sleep(1.0)
                 st1 = await b.js(ctx, f"JSON.stringify({{label: document.querySelector('{ex} .play').getAttribute('aria-label'), time: document.querySelector('{ex} .time').textContent}})")

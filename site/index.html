@@ -8,6 +8,7 @@
 <title>Binaural HRTF-Conditioned Target Speaker Extraction</title>
 <meta name="description" content="Listening examples and evaluation results for HRTF-conditioned binaural target speaker extraction with joint dereverberation.">
 <link rel="icon" href="data:,">
+<script>try{var t=localStorage.getItem("theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)}catch(e){}</script>
 <link rel="stylesheet" href="assets/site.css">
 <script type="module" src="assets/js/app.js"></script>
 </head>
@@ -15,7 +16,8 @@
 <a class="skip" href="#listening">Skip to listening examples</a>
 <header class="site-header">
   <div class="wrap">
-    <p class="eyebrow">Research demo · Experiment 2</p>
+    <div class="topbar"><p class="eyebrow">Research demo · Experiment 2</p>
+      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch colour theme"></button></div>
     <h1>Binaural HRTF-Conditioned Target Speaker Extraction</h1>
     <p class="lede">A diffusion model is given a binaural two-speaker mixture and the HRTF of a requested direction, and aims to
       extract that speaker while reducing reverberation. Five variants differ only in how the HRTF conditions the network.</p>
