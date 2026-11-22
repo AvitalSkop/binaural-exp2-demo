@@ -1,0 +1,724 @@
+[
+ {
+  "id": "041",
+  "title": "Clear extraction of both speakers",
+  "description": "Both target speakers are extracted clearly, with little audible residual interference.",
+  "highlighted_targets": [
+   "s1",
+   "s2"
+  ],
+  "default_target": "s1",
+  "azimuth": {
+   "s1": 10.0,
+   "s2": -35.0
+  },
+  "separation_deg": 45,
+  "duration_s": 6.16,
+  "targets": {
+   "s1": {
+    "azimuth": 10.0,
+    "interferer_azimuth": -35.0,
+    "input_sir_db": 5.74,
+    "mixture_si_sdr": -7.97,
+    "models": {
+     "C": {
+      "si_sdr": 1.72,
+      "si_sdri": 9.69,
+      "si_sir": 34.45,
+      "si_sar": 1.73,
+      "success": true
+     },
+     "F": {
+      "si_sdr": 3.49,
+      "si_sdri": 11.46,
+      "si_sir": 32.55,
+      "si_sar": 3.5,
+      "success": true
+     },
+     "B": {
+      "si_sdr": 2.21,
+      "si_sdri": 10.18,
+      "si_sir": 32.52,
+      "si_sar": 2.22,
+      "success": true
+     },
+     "D": {
+      "si_sdr": 2.2,
+      "si_sdri": 10.16,
+      "si_sir": 32.4,
+      "si_sar": 2.21,
+      "success": true
+     },
+     "E1": {
+      "si_sdr": 2.44,
+      "si_sdri": 10.41,
+      "si_sir": 33.53,
+      "si_sar": 2.45,
+      "success": true
+     }
+    }
+   },
+   "s2": {
+    "azimuth": -35.0,
+    "interferer_azimuth": 10.0,
+    "input_sir_db": -5.74,
+    "mixture_si_sdr": -13.11,
+    "models": {
+     "C": {
+      "si_sdr": -0.5,
+      "si_sdri": 12.61,
+      "si_sir": 28.93,
+      "si_sar": -0.49,
+      "success": true
+     },
+     "F": {
+      "si_sdr": 1.25,
+      "si_sdri": 14.35,
+      "si_sir": 30.06,
+      "si_sar": 1.26,
+      "success": true
+     },
+     "B": {
+      "si_sdr": 0.21,
+      "si_sdri": 13.32,
+      "si_sir": 27.57,
+      "si_sar": 0.23,
+      "success": true
+     },
+     "D": {
+      "si_sdr": -0.21,
+      "si_sdri": 12.9,
+      "si_sir": 27.43,
+      "si_sar": -0.19,
+      "success": true
+     },
+     "E1": {
+      "si_sdr": 0.36,
+      "si_sdri": 13.47,
+      "si_sir": 30.62,
+      "si_sar": 0.37,
+      "success": true
+     }
+    }
+   }
+  },
+  "audio": {
+   "mixture": "audio/ex041/mixture.wav",
+   "clean_s1": "audio/ex041/clean_s1.wav",
+   "rev_s1": "audio/ex041/rev_s1.wav",
+   "clean_s2": "audio/ex041/clean_s2.wav",
+   "rev_s2": "audio/ex041/rev_s2.wav",
+   "C_s1": "audio/ex041/C_s1.wav",
+   "C_s2": "audio/ex041/C_s2.wav",
+   "F_s1": "audio/ex041/F_s1.wav",
+   "F_s2": "audio/ex041/F_s2.wav",
+   "B_s1": "audio/ex041/B_s1.wav",
+   "B_s2": "audio/ex041/B_s2.wav",
+   "D_s1": "audio/ex041/D_s1.wav",
+   "D_s2": "audio/ex041/D_s2.wav",
+   "E1_s1": "audio/ex041/E1_s1.wav",
+   "E1_s2": "audio/ex041/E1_s2.wav"
+  }
+ },
+ {
+  "id": "008",
+  "title": "Target switching at 10° separation",
+  "description": "Target switching is achieved with only 10° angular separation, although some interference remains.",
+  "highlighted_targets": [
+   "s1",
+   "s2"
+  ],
+  "default_target": "s1",
+  "azimuth": {
+   "s1": -5.0,
+   "s2": 5.0
+  },
+  "separation_deg": 10,
+  "duration_s": 5.06,
+  "targets": {
+   "s1": {
+    "azimuth": -5.0,
+    "interferer_azimuth": 5.0,
+    "input_sir_db": 0.72,
+    "mixture_si_sdr": -10.58,
+    "models": {
+     "C": {
+      "si_sdr": -2.91,
+      "si_sdri": 7.67,
+      "si_sir": 18.32,
+      "si_sar": -2.81,
+      "success": true
+     },
+     "F": {
+      "si_sdr": 0.28,
+      "si_sdri": 10.86,
+      "si_sir": 22.12,
+      "si_sar": 0.34,
+      "success": true
+     },
+     "B": {
+      "si_sdr": -2.2,
+      "si_sdri": 8.38,
+      "si_sir": 12.51,
+      "si_sar": -1.81,
+      "success": true
+     },
+     "D": {
+      "si_sdr": -1.52,
+      "si_sdri": 9.06,
+      "si_sir": 15.55,
+      "si_sar": -1.3,
+      "success": true
+     },
+     "E1": {
+      "si_sdr": -1.89,
+      "si_sdri": 8.69,
+      "si_sir": 18.7,
+      "si_sar": -1.79,
+      "success": true
+     }
+    }
+   },
+   "s2": {
+    "azimuth": 5.0,
+    "interferer_azimuth": -5.0,
+    "input_sir_db": -0.72,
+    "mixture_si_sdr": -11.14,
+    "models": {
+     "C": {
+      "si_sdr": -5.45,
+      "si_sdri": 5.69,
+      "si_sir": 6.37,
+      "si_sar": -4.23,
+      "success": true
+     },
+     "F": {
+      "si_sdr": -3.58,
+      "si_sdri": 7.56,
+      "si_sir": 8.29,
+      "si_sar": -2.67,
+      "success": true
+     },
+     "B": {
+      "si_sdr": -3.92,
+      "si_sdri": 7.22,
+      "si_sir": 4.81,
+      "si_sar": -2.03,
+      "success": true
+     },
+     "D": {
+      "si_sdr": -4.2,
+      "si_sdri": 6.95,
+      "si_sir": 5.65,
+      "si_sar": -2.65,
+      "success": true
+     },
+     "E1": {
+      "si_sdr": -2.87,
+      "si_sdri": 8.27,
+      "si_sir": 9.69,
+      "si_sar": -2.17,
+      "success": true
+     }
+    }
+   }
+  },
+  "audio": {
+   "mixture": "audio/ex008/mixture.wav",
+   "clean_s1": "audio/ex008/clean_s1.wav",
+   "rev_s1": "audio/ex008/rev_s1.wav",
+   "clean_s2": "audio/ex008/clean_s2.wav",
+   "rev_s2": "audio/ex008/rev_s2.wav",
+   "C_s1": "audio/ex008/C_s1.wav",
+   "C_s2": "audio/ex008/C_s2.wav",
+   "F_s1": "audio/ex008/F_s1.wav",
+   "F_s2": "audio/ex008/F_s2.wav",
+   "B_s1": "audio/ex008/B_s1.wav",
+   "B_s2": "audio/ex008/B_s2.wav",
+   "D_s1": "audio/ex008/D_s1.wav",
+   "D_s2": "audio/ex008/D_s2.wav",
+   "E1_s1": "audio/ex008/E1_s1.wav",
+   "E1_s2": "audio/ex008/E1_s2.wav"
+  }
+ },
+ {
+  "id": "024",
+  "title": "FiLM compared with Concat",
+  "description": "For target s1, the FiLM (F) estimate sounds cleaner than the Concat (C) estimate.",
+  "highlighted_targets": [
+   "s1"
+  ],
+  "default_target": "s1",
+  "azimuth": {
+   "s1": 5.0,
+   "s2": -10.0
+  },
+  "separation_deg": 15,
+  "duration_s": 5.4,
+  "targets": {
+   "s1": {
+    "azimuth": 5.0,
+    "interferer_azimuth": -10.0,
+    "input_sir_db": 2.14,
+    "mixture_si_sdr": -10.07,
+    "models": {
+     "C": {
+      "si_sdr": -0.98,
+      "si_sdri": 9.09,
+      "si_sir": 23.57,
+      "si_sar": -0.95,
+      "success": true
+     },
+     "F": {
+      "si_sdr": 1.33,
+      "si_sdri": 11.4,
+      "si_sir": 25.57,
+      "si_sar": 1.36,
+      "success": true
+     },
+     "B": {
+      "si_sdr": -1.06,
+      "si_sdri": 9.01,
+      "si_sir": 20.1,
+      "si_sar": -0.98,
+      "success": true
+     },
+     "D": {
+      "si_sdr": -1.51,
+      "si_sdri": 8.56,
+      "si_sir": 14.13,
+      "si_sar": -1.22,
+      "success": true
+     },
+     "E1": {
+      "si_sdr": -0.73,
+      "si_sdri": 9.34,
+      "si_sir": 17.93,
+      "si_sar": -0.6,
+      "success": true
+     }
+    }
+   },
+   "s2": {
+    "azimuth": -10.0,
+    "interferer_azimuth": 5.0,
+    "input_sir_db": -2.14,
+    "mixture_si_sdr": -10.61,
+    "models": {
+     "C": {
+      "si_sdr": -1.35,
+      "si_sdri": 9.26,
+      "si_sir": 15.31,
+      "si_sar": -1.13,
+      "success": true
+     },
+     "F": {
+      "si_sdr": 0.02,
+      "si_sdri": 10.63,
+      "si_sir": 15.9,
+      "si_sar": 0.24,
+      "success": true
+     },
+     "B": {
+      "si_sdr": -1.55,
+      "si_sdri": 9.06,
+      "si_sir": 12.45,
+      "si_sar": -1.13,
+      "success": true
+     },
+     "D": {
+      "si_sdr": -1.07,
+      "si_sdri": 9.54,
+      "si_sir": 19.64,
+      "si_sar": -0.99,
+      "success": true
+     },
+     "E1": {
+      "si_sdr": -0.54,
+      "si_sdri": 10.08,
+      "si_sir": 17.14,
+      "si_sar": -0.38,
+      "success": true
+     }
+    }
+   }
+  },
+  "audio": {
+   "mixture": "audio/ex024/mixture.wav",
+   "clean_s1": "audio/ex024/clean_s1.wav",
+   "rev_s1": "audio/ex024/rev_s1.wav",
+   "clean_s2": "audio/ex024/clean_s2.wav",
+   "rev_s2": "audio/ex024/rev_s2.wav",
+   "C_s1": "audio/ex024/C_s1.wav",
+   "C_s2": "audio/ex024/C_s2.wav",
+   "F_s1": "audio/ex024/F_s1.wav",
+   "F_s2": "audio/ex024/F_s2.wav",
+   "B_s1": "audio/ex024/B_s1.wav",
+   "B_s2": "audio/ex024/B_s2.wav",
+   "D_s1": "audio/ex024/D_s1.wav",
+   "D_s2": "audio/ex024/D_s2.wav",
+   "E1_s1": "audio/ex024/E1_s1.wav",
+   "E1_s2": "audio/ex024/E1_s2.wav"
+  }
+ },
+ {
+  "id": "030",
+  "title": "Extraction with audible dereverberation",
+  "description": "For target s2, the estimates reduce audible room reverberation while preserving relatively clear speech.",
+  "highlighted_targets": [
+   "s2"
+  ],
+  "default_target": "s2",
+  "azimuth": {
+   "s1": 10.0,
+   "s2": -10.0
+  },
+  "separation_deg": 20,
+  "duration_s": 5.51,
+  "targets": {
+   "s1": {
+    "azimuth": 10.0,
+    "interferer_azimuth": -10.0,
+    "input_sir_db": 4.46,
+    "mixture_si_sdr": -7.31,
+    "models": {
+     "C": {
+      "si_sdr": 0.01,
+      "si_sdri": 7.32,
+      "si_sir": 30.65,
+      "si_sar": 0.02,
+      "success": true
+     },
+     "F": {
+      "si_sdr": 1.84,
+      "si_sdri": 9.14,
+      "si_sir": 31.61,
+      "si_sar": 1.84,
+      "success": true
+     },
+     "B": {
+      "si_sdr": 0.84,
+      "si_sdri": 8.15,
+      "si_sir": 31.27,
+      "si_sar": 0.85,
+      "success": true
+     },
+     "D": {
+      "si_sdr": 0.1,
+      "si_sdri": 7.4,
+      "si_sir": 30.85,
+      "si_sar": 0.1,
+      "success": true
+     },
+     "E1": {
+      "si_sdr": 0.76,
+      "si_sdri": 8.07,
+      "si_sir": 29.01,
+      "si_sar": 0.77,
+      "success": true
+     }
+    }
+   },
+   "s2": {
+    "azimuth": -10.0,
+    "interferer_azimuth": 10.0,
+    "input_sir_db": -4.46,
+    "mixture_si_sdr": -13.16,
+    "models": {
+     "C": {
+      "si_sdr": 1.08,
+      "si_sdri": 14.23,
+      "si_sir": 29.75,
+      "si_sar": 1.09,
+      "success": true
+     },
+     "F": {
+      "si_sdr": 2.18,
+      "si_sdri": 15.34,
+      "si_sir": 29.49,
+      "si_sar": 2.19,
+      "success": true
+     },
+     "B": {
+      "si_sdr": 0.49,
+      "si_sdri": 13.65,
+      "si_sir": 21.26,
+      "si_sar": 0.56,
+      "success": true
+     },
+     "D": {
+      "si_sdr": 0.89,
+      "si_sdri": 14.04,
+      "si_sir": 26.02,
+      "si_sar": 0.91,
+      "success": true
+     },
+     "E1": {
+      "si_sdr": 1.27,
+      "si_sdri": 14.43,
+      "si_sir": 24.08,
+      "si_sar": 1.31,
+      "success": true
+     }
+    }
+   }
+  },
+  "audio": {
+   "mixture": "audio/ex030/mixture.wav",
+   "clean_s1": "audio/ex030/clean_s1.wav",
+   "rev_s1": "audio/ex030/rev_s1.wav",
+   "clean_s2": "audio/ex030/clean_s2.wav",
+   "rev_s2": "audio/ex030/rev_s2.wav",
+   "C_s1": "audio/ex030/C_s1.wav",
+   "C_s2": "audio/ex030/C_s2.wav",
+   "F_s1": "audio/ex030/F_s1.wav",
+   "F_s2": "audio/ex030/F_s2.wav",
+   "B_s1": "audio/ex030/B_s1.wav",
+   "B_s2": "audio/ex030/B_s2.wav",
+   "D_s1": "audio/ex030/D_s1.wav",
+   "D_s2": "audio/ex030/D_s2.wav",
+   "E1_s1": "audio/ex030/E1_s1.wav",
+   "E1_s2": "audio/ex030/E1_s2.wav"
+  }
+ },
+ {
+  "id": "006",
+  "title": "Residual interference: Hadamard compared with FiLM",
+  "description": "For target s2, Hadamard (E1) suppresses the interfering speaker more effectively than FiLM (F), particularly during pauses in the target speech.",
+  "highlighted_targets": [
+   "s2"
+  ],
+  "default_target": "s2",
+  "azimuth": {
+   "s1": 15.0,
+   "s2": 25.0
+  },
+  "separation_deg": 10,
+  "duration_s": 6.14,
+  "targets": {
+   "s1": {
+    "azimuth": 15.0,
+    "interferer_azimuth": 25.0,
+    "input_sir_db": 0.84,
+    "mixture_si_sdr": -8.74,
+    "models": {
+     "C": {
+      "si_sdr": 1.65,
+      "si_sdri": 10.4,
+      "si_sir": 18.35,
+      "si_sar": 1.82,
+      "success": true
+     },
+     "F": {
+      "si_sdr": 3.49,
+      "si_sdri": 12.23,
+      "si_sir": 26.63,
+      "si_sar": 3.52,
+      "success": true
+     },
+     "B": {
+      "si_sdr": 2.36,
+      "si_sdri": 11.1,
+      "si_sir": 20.7,
+      "si_sar": 2.46,
+      "success": true
+     },
+     "D": {
+      "si_sdr": 2.56,
+      "si_sdri": 11.31,
+      "si_sir": 19.11,
+      "si_sar": 2.72,
+      "success": true
+     },
+     "E1": {
+      "si_sdr": 1.56,
+      "si_sdri": 10.3,
+      "si_sir": 20.85,
+      "si_sar": 1.65,
+      "success": true
+     }
+    }
+   },
+   "s2": {
+    "azimuth": 25.0,
+    "interferer_azimuth": 15.0,
+    "input_sir_db": -0.84,
+    "mixture_si_sdr": -9.96,
+    "models": {
+     "C": {
+      "si_sdr": -4.81,
+      "si_sdri": 5.15,
+      "si_sir": 3.32,
+      "si_sar": -2.39,
+      "success": true
+     },
+     "F": {
+      "si_sdr": -3.48,
+      "si_sdri": 6.48,
+      "si_sir": 5.77,
+      "si_sar": -1.88,
+      "success": true
+     },
+     "B": {
+      "si_sdr": -4.97,
+      "si_sdri": 4.99,
+      "si_sir": 2.43,
+      "si_sar": -2.09,
+      "success": true
+     },
+     "D": {
+      "si_sdr": -4.44,
+      "si_sdri": 5.52,
+      "si_sir": 3.37,
+      "si_sar": -1.97,
+      "success": true
+     },
+     "E1": {
+      "si_sdr": -0.41,
+      "si_sdri": 9.55,
+      "si_sir": 16.66,
+      "si_sar": -0.22,
+      "success": true
+     }
+    }
+   }
+  },
+  "audio": {
+   "mixture": "audio/ex006/mixture.wav",
+   "clean_s1": "audio/ex006/clean_s1.wav",
+   "rev_s1": "audio/ex006/rev_s1.wav",
+   "clean_s2": "audio/ex006/clean_s2.wav",
+   "rev_s2": "audio/ex006/rev_s2.wav",
+   "C_s1": "audio/ex006/C_s1.wav",
+   "C_s2": "audio/ex006/C_s2.wav",
+   "F_s1": "audio/ex006/F_s1.wav",
+   "F_s2": "audio/ex006/F_s2.wav",
+   "B_s1": "audio/ex006/B_s1.wav",
+   "B_s2": "audio/ex006/B_s2.wav",
+   "D_s1": "audio/ex006/D_s1.wav",
+   "D_s2": "audio/ex006/D_s2.wav",
+   "E1_s1": "audio/ex006/E1_s1.wav",
+   "E1_s2": "audio/ex006/E1_s2.wav"
+  }
+ },
+ {
+  "id": "003",
+  "title": "Failure case: the interferer dominates",
+  "description": "For target s2, the interfering speaker remains dominant in the estimates of all five models.",
+  "highlighted_targets": [
+   "s2"
+  ],
+  "default_target": "s2",
+  "azimuth": {
+   "s1": -10.0,
+   "s2": -5.0
+  },
+  "separation_deg": 5,
+  "duration_s": 4.42,
+  "targets": {
+   "s1": {
+    "azimuth": -10.0,
+    "interferer_azimuth": -5.0,
+    "input_sir_db": 2.18,
+    "mixture_si_sdr": -9.07,
+    "models": {
+     "C": {
+      "si_sdr": -2.69,
+      "si_sdri": 6.38,
+      "si_sir": 8.62,
+      "si_sar": -1.81,
+      "success": true
+     },
+     "F": {
+      "si_sdr": -2.5,
+      "si_sdri": 6.57,
+      "si_sir": 11.29,
+      "si_sar": -2.02,
+      "success": true
+     },
+     "B": {
+      "si_sdr": -2.77,
+      "si_sdri": 6.3,
+      "si_sir": 6.57,
+      "si_sar": -1.39,
+      "success": true
+     },
+     "D": {
+      "si_sdr": -1.38,
+      "si_sdri": 7.69,
+      "si_sir": 13.46,
+      "si_sar": -1.05,
+      "success": true
+     },
+     "E1": {
+      "si_sdr": -3.32,
+      "si_sdri": 5.75,
+      "si_sir": 5.62,
+      "si_sar": -1.71,
+      "success": true
+     }
+    }
+   },
+   "s2": {
+    "azimuth": -5.0,
+    "interferer_azimuth": -10.0,
+    "input_sir_db": -2.18,
+    "mixture_si_sdr": -11.81,
+    "models": {
+     "C": {
+      "si_sdr": -9.24,
+      "si_sdri": 2.57,
+      "si_sir": -4.05,
+      "si_sar": -2.31,
+      "success": false
+     },
+     "F": {
+      "si_sdr": -7.9,
+      "si_sdri": 3.92,
+      "si_sir": -2.96,
+      "si_sar": -1.58,
+      "success": false
+     },
+     "B": {
+      "si_sdr": -6.12,
+      "si_sdri": 5.69,
+      "si_sir": -1.24,
+      "si_sar": -0.83,
+      "success": false
+     },
+     "D": {
+      "si_sdr": -6.4,
+      "si_sdri": 5.41,
+      "si_sir": -1.41,
+      "si_sar": -1.07,
+      "success": false
+     },
+     "E1": {
+      "si_sdr": -6.14,
+      "si_sdri": 5.67,
+      "si_sir": -0.84,
+      "si_sar": -1.26,
+      "success": false
+     }
+    }
+   }
+  },
+  "audio": {
+   "mixture": "audio/ex003/mixture.wav",
+   "clean_s1": "audio/ex003/clean_s1.wav",
+   "rev_s1": "audio/ex003/rev_s1.wav",
+   "clean_s2": "audio/ex003/clean_s2.wav",
+   "rev_s2": "audio/ex003/rev_s2.wav",
+   "C_s1": "audio/ex003/C_s1.wav",
+   "C_s2": "audio/ex003/C_s2.wav",
+   "F_s1": "audio/ex003/F_s1.wav",
+   "F_s2": "audio/ex003/F_s2.wav",
+   "B_s1": "audio/ex003/B_s1.wav",
+   "B_s2": "audio/ex003/B_s2.wav",
+   "D_s1": "audio/ex003/D_s1.wav",
+   "D_s2": "audio/ex003/D_s2.wav",
+   "E1_s1": "audio/ex003/E1_s1.wav",
+   "E1_s2": "audio/ex003/E1_s2.wav"
+  }
+ }
+]

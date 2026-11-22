@@ -1,0 +1,34 @@
+# Python caches and temporary files
+__pycache__/
+*.py[cod]
+*.tmp
+*.bak
+*.swp
+*~
+.DS_Store
+Thumbs.db
+
+# Local environment and editor settings
+.env
+.env.*
+.venv/
+venv/
+.vscode/
+.idea/
+*.local
+*.local.*
+
+# Private material: never in this repository (export tooling, evidence audit, research outputs)
+*private*/
+export_demo.py
+consistency_report.json
+audit/
+*.ckpt
+*.npz
+*.pt
+
+# Local validation outputs (screenshots, browser profiles, reports)
+shots*/
+*.png
+ffprof-*/
+browser_report.json

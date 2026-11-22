@@ -1,0 +1,249 @@
+{
+ "set": "valsep64",
+ "steps": [
+  20000,
+  40000,
+  80000,
+  120000,
+  160000
+ ],
+ "values": {
+  "C": [
+   {
+    "si_sdri": 1.3143,
+    "si_sir": 6.6818,
+    "si_sar": -6.5155,
+    "success": 0.7109,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 2.3969,
+    "si_sir": 8.9232,
+    "si_sar": -5.5233,
+    "success": 0.7812,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 4.7168,
+    "si_sir": 11.3376,
+    "si_sar": -3.3134,
+    "success": 0.8516,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 6.5479,
+    "si_sir": 14.1242,
+    "si_sar": -1.6363,
+    "success": 0.8672,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 7.8873,
+    "si_sir": 17.2062,
+    "si_sar": -0.7514,
+    "success": 0.9375,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   }
+  ],
+  "F": [
+   {
+    "si_sdri": 1.266,
+    "si_sir": 8.0749,
+    "si_sar": -6.7899,
+    "success": 0.7109,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 3.9963,
+    "si_sir": 10.7699,
+    "si_sar": -4.1219,
+    "success": 0.8203,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 7.1414,
+    "si_sir": 15.0327,
+    "si_sar": -1.3801,
+    "success": 0.8906,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 8.7081,
+    "si_sir": 17.8307,
+    "si_sar": -0.1725,
+    "success": 0.9375,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 9.5487,
+    "si_sir": 20.0615,
+    "si_sar": 0.5016,
+    "success": 0.9609,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   }
+  ],
+  "B": [
+   {
+    "si_sdri": 2.4891,
+    "si_sir": 9.6972,
+    "si_sar": -5.8498,
+    "success": 0.8672,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 3.8758,
+    "si_sir": 11.3522,
+    "si_sar": -4.5008,
+    "success": 0.9062,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 5.8996,
+    "si_sir": 12.2101,
+    "si_sar": -2.4606,
+    "success": 0.8672,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 7.8719,
+    "si_sir": 16.6527,
+    "si_sar": -0.9477,
+    "success": 0.9297,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 8.877,
+    "si_sir": 17.7311,
+    "si_sar": 0.0063,
+    "success": 0.9297,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   }
+  ],
+  "D": [
+   {
+    "si_sdri": 2.3814,
+    "si_sir": 9.6592,
+    "si_sar": -6.0077,
+    "success": 0.8672,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 4.1059,
+    "si_sir": 12.6347,
+    "si_sar": -4.5387,
+    "success": 0.9062,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 5.7869,
+    "si_sir": 14.1723,
+    "si_sar": -2.8883,
+    "success": 0.9219,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 8.0332,
+    "si_sir": 16.7715,
+    "si_sar": -0.6612,
+    "success": 0.9297,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 8.8455,
+    "si_sir": 18.7981,
+    "si_sar": 0.142,
+    "success": 0.9297,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   }
+  ],
+  "E1": [
+   {
+    "si_sdri": 2.2483,
+    "si_sir": 8.7756,
+    "si_sar": -5.9242,
+    "success": 0.8438,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 3.4345,
+    "si_sir": 9.9694,
+    "si_sar": -4.93,
+    "success": 0.8828,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 5.6747,
+    "si_sir": 14.3447,
+    "si_sar": -3.0499,
+    "success": 0.9219,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 7.9682,
+    "si_sir": 18.1582,
+    "si_sar": -1.0669,
+    "success": 0.9375,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   },
+   {
+    "si_sdri": 8.9543,
+    "si_sir": 20.4785,
+    "si_sar": -0.1876,
+    "success": 0.9688,
+    "n_requests": 128,
+    "n_mixtures": 64,
+    "n_decomp_requests": 128
+   }
+  ]
+ },
+ "n_mixtures": 64,
+ "n_requests": 128
+}
