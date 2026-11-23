@@ -104,6 +104,10 @@ check(not any("Hadamard" in t for t in text_all + exp_text) and any("Element-wis
 check(meta["audio_status"] == "approved", "audio status = approved")
 check([e["id"] for e in examples] == EXAMPLES, "selected examples in order 047, 058, 041, 008, 006")
 check(all(e["description"] == "" for e in examples), "no descriptive sentences under the example titles")
+ex = {e["id"]: e for e in examples}
+check("success" not in ex["008"]["title"].lower(), "008 is not described as successful")
+check(ex["006"].get("listening", {}).get("s1", "").startswith("FiLM") and ex["006"]["listening"].get("s2", "").startswith("Element-wise"),
+      "006 keeps both listening directions (FiLM better for s1, Element-wise better for s2)")
 
 # audio: only the shown signals, byte-identical, consistent per example
 sha = meta["audio_sha256"]

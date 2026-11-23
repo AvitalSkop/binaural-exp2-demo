@@ -1,4 +1,4 @@
-Example 047: Clear extraction of both speakers
+Example 047: Successful extraction of both speakers
 
 s1 at +15 deg, s2 at -30 deg (0 = front, positive = right), separation 45 deg.
 

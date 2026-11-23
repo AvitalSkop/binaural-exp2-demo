@@ -1,6 +1,7 @@
-Example 006: Element-wise suppresses interference better
+Example 006: Element-wise reduces interference for s2
 
 s1 at +15 deg, s2 at +25 deg (0 = front, positive = right), separation 10 deg.
+Listening review: s1 FiLM suppresses interference better, s2 Element-wise suppresses interference better.
 
 Requested s1 at +15 deg, initial target SIR +0.8 dB
 Signal              SI-SDR  SI-SDRi  SI-SIR  SI-SAR  PESQ

@@ -1,7 +1,7 @@
 [
  {
   "id": "047",
-  "title": "Clear extraction of both speakers",
+  "title": "Successful extraction of both speakers",
   "description": "",
   "models": [
    "F",
@@ -83,7 +83,7 @@
  },
  {
   "id": "058",
-  "title": "Clear extraction at wide angular separation",
+  "title": "Successful extraction at 70° separation",
   "description": "",
   "models": [
    "F",
@@ -247,7 +247,7 @@
  },
  {
   "id": "008",
-  "title": "Target extraction at 10° separation",
+  "title": "Extraction failure at 10° separation",
   "description": "",
   "models": [
    "F",
@@ -329,13 +329,16 @@
  },
  {
   "id": "006",
-  "title": "Element-wise suppresses interference better",
+  "title": "Element-wise reduces interference for s2",
   "description": "",
   "models": [
    "F",
    "E1"
   ],
-  "listening": null,
+  "listening": {
+   "s1": "FiLM suppresses interference better",
+   "s2": "Element-wise suppresses interference better"
+  },
   "highlighted_targets": [
    "s2"
   ],

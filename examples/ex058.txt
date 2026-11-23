@@ -1,4 +1,4 @@
-Example 058: Clear extraction at wide angular separation
+Example 058: Successful extraction at 70° separation
 
 s1 at +50 deg, s2 at -20 deg (0 = front, positive = right), separation 70 deg.
 
