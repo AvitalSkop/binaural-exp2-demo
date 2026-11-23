@@ -97,6 +97,9 @@ check(sorted(m["key"] for m in meta["models"]) == sorted(MODELS), "five models i
 check('MODEL_KEYS = ["B", "C", "D", "E1", "F"]' in (SITE / "assets/js/common.js").read_text(), "display order B, C, D, E1, F")
 text_all = [p.read_text() for p in files if p.suffix in (".js", ".css", ".html", ".json")]
 check(not any(k in t for t in text_all for k in ("★", "Suggested comparison", "featured", "FEATURED")), "no listening guidance")
+exp_text = [p.read_text() for p in exp_files if p.suffix in (".md", ".txt", ".svg")] + [(REPO / "README.md").read_text()]
+check(not any("Hadamard" in t for t in text_all + exp_text) and any("Element-wise" in t for t in text_all),
+      "E1 shown as Element-wise everywhere (site, exports, README)")
 check(meta["audio_status"] == "approved", "audio status = approved")
 check([e["id"] for e in examples] == EXAMPLES, "seven selected examples in order")
 

@@ -9,7 +9,7 @@ Signal              SI-SDR  SI-SDRi  SI-SIR  SI-SAR  PESQ  Target selected
 Mixture              -10.1        -       -       -  1.15                -
 Reverberant target       -        -       -       -  1.36                -
 C Concat              -1.0     +9.1    23.6    -0.9  1.26              yes
-E1 Hadamard           -0.7     +9.3    17.9    -0.6  1.30              yes
+E1 Element-wise       -0.7     +9.3    17.9    -0.6  1.30              yes
 F FiLM                 1.3    +11.4    25.6     1.4  1.50              yes
 
 Requested s2 at -10 deg, initial target SIR -2.1 dB
@@ -18,7 +18,7 @@ Signal              SI-SDR  SI-SDRi  SI-SIR  SI-SAR  PESQ  Target selected
 Mixture              -10.6        -       -       -  1.13                -
 Reverberant target       -        -       -       -  1.49                -
 C Concat              -1.4     +9.3    15.3    -1.1  1.27              yes
-E1 Hadamard           -0.5    +10.1    17.1    -0.4  1.35              yes
+E1 Element-wise       -0.5    +10.1    17.1    -0.4  1.35              yes
 F FiLM                 0.0    +10.6    15.9     0.2  1.29              yes
 
 Metrics: binaural (both ears jointly), against the near-anechoic image of the requested speaker; SI metrics in dB.

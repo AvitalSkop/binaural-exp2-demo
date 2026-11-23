@@ -278,7 +278,7 @@
  {
   "id": "047",
   "title": "Reconstruction at 45° separation",
-  "description": "FiLM (F) and Hadamard (E1) reconstruct both target speakers well.",
+  "description": "FiLM (F) and Element-wise (E1) reconstruct both target speakers well.",
   "models": [
    "F",
    "E1"
@@ -364,7 +364,7 @@
  {
   "id": "058",
   "title": "Reconstruction at 70° separation",
-  "description": "FiLM (F) and Hadamard (E1) reconstruct both target speakers well.",
+  "description": "FiLM (F) and Element-wise (E1) reconstruct both target speakers well.",
   "models": [
    "F",
    "E1"
@@ -449,8 +449,8 @@
  },
  {
   "id": "006",
-  "title": "Residual interference: Hadamard compared with FiLM",
-  "description": "For target s2, Hadamard (E1) suppresses the interfering speaker more effectively than FiLM (F), particularly during pauses in the target speech.",
+  "title": "Residual interference: Element-wise compared with FiLM",
+  "description": "For target s2, Element-wise (E1) suppresses the interfering speaker more effectively than FiLM (F), particularly during pauses in the target speech.",
   "models": [
    "F",
    "E1"

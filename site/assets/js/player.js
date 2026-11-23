@@ -46,9 +46,9 @@ export class ExamplePlayer {
   groups() {
     const t = this.target, o = this.other();
     return {
-      refs: [["mixture", "Mixture"], ["clean", `Target ${t} · near-anechoic`]],
-      est: this.models.map((m) => [m.key, `${m.key} · ${m.name}`, m.key]),
-      more: [["rev", `Target ${t} · reverberant`], ["int_clean", `Interferer ${o} · near-anechoic`], ["int_rev", `Interferer ${o} · reverberant`]],
+      refs: [["mixture", "Mixture"], ["clean", `Near-anechoic target (${t})`]],
+      est: this.models.map((m) => [m.key, `${m.name} (${m.key})`, m.key]),
+      more: [["rev", `Reverberant target (${t})`], ["int_clean", `Near-anechoic interferer (${o})`], ["int_rev", `Reverberant interferer (${o})`]],
     };
   }
 
@@ -71,9 +71,9 @@ export class ExamplePlayer {
         <input class="aseek" type="range" min="0" max="1000" step="1" value="0" aria-label="Position: ${label}" ${this.loaded ? "" : "disabled"}>
         <span class="atime">${fmtTime(0)} / ${fmtTime(d)}</span></div>`;
     const wasOpen = this.rowsBox.querySelector("details")?.open;
-    this.rowsBox.innerHTML = `<div class="group-label">References</div>${g.refs.map(row).join("")}
-      <div class="group-label">Estimates</div>${g.est.map(row).join("")}
-      <details class="more"${wasOpen ? " open" : ""}><summary>More references</summary>${g.more.map(row).join("")}</details>`;
+    this.rowsBox.innerHTML = `<div class="agrid">${g.refs.map(row).join("")}</div>
+      <div class="agrid">${g.est.map(row).join("")}</div>
+      <details class="more"${wasOpen ? " open" : ""}><summary>More references</summary><div class="agrid">${g.more.map(row).join("")}</div></details>`;
     this.rowsBox.querySelectorAll(".arow").forEach((r) => {
       const role = r.dataset.role;
       r.querySelector(".aplay").addEventListener("click", () => (this.playing === role ? this.pause() : this.play(role)));

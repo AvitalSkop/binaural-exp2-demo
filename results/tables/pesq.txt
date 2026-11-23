@@ -7,7 +7,7 @@ Signal              PESQ
 B Spatial Features  1.29
 C Concat            1.24
 D TCSA              1.36
-E1 Hadamard         1.30
+E1 Element-wise     1.30
 F FiLM              1.36
 Mixture             1.11
 Reverberant target  1.38

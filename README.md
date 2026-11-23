@@ -24,4 +24,4 @@ Preview locally (fetch and Web Audio need http, not file://):
 
 Model colours (all five models in the results; F, E1 and, in example 024, C in the listening examples), display order
 B, C, D, E1, F, each with a fixed marker shape: B Spatial Features #1baf7a (diamond), C Concat #2a78d6 (circle),
-D TCSA #eda100 (triangle), E1 Hadamard #8e44ad (inverted triangle), F FiLM #eb6834 (square).
+D TCSA #eda100 (triangle), E1 Element-wise #8e44ad (inverted triangle), F FiLM #eb6834 (square).
