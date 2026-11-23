@@ -79,7 +79,8 @@ sir = results["input_sir"]
     block_tables(sir["values"], [f"{b} dB" for b in sir["bins"]], "Initial target SIR") + "\n")
 
 # ------------------------------------------------------------------ results/plots (minimal: title, axis labels, lines, legend)
-plt.rcParams.update({"font.size": 10, "axes.spines.top": False, "axes.spines.right": False, "svg.fonttype": "none"})
+plt.rcParams.update({"font.size": 10, "axes.spines.top": False, "axes.spines.right": False, "svg.fonttype": "none",
+                     "svg.hashsalt": "binaural-exp2-demo"})          # reproducible SVG element ids
 
 
 def plot(xs, ticks, values, key, label, title, xlabel, name, rotate=0):
