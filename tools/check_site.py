@@ -4,7 +4,7 @@ Static validation of the public site directory (everything under site/ is public
     python tools/check_site.py [site_dir]
 
 Checks: file-type allowlist and size budget; leak scan (private paths, hosts, account names, dataset identifiers)
-over every file including WAV bytes; JSON schema and internal consistency (models, examples, counts, measured
+over every file including WAV bytes, also in the repository exports examples/ and results/; JSON schema and internal consistency (models, examples, counts, measured
 checkpoints); audio integrity (SHA-256 against meta.json, RIFF chunks = fmt + data only, PCM 16-bit 16 kHz stereo,
 equal length within an example); every asset referenced by index.html / JS imports exists; required scientific
 statements are present. Exit 1 on any failure. Standard library only.
@@ -21,7 +21,7 @@ SITE = Path(sys.argv[1] if len(sys.argv) > 1 else Path(__file__).resolve().paren
 ALLOWED = {".html", ".css", ".js", ".json", ".wav", ".txt"}
 MAX_FILE, MAX_TOTAL = 25 * 2**20, 40 * 2**20
 MODELS = ["C", "F", "B", "D", "E1"]
-EXAMPLES = ["041", "008", "024", "030", "006", "003"]
+EXAMPLES = ["041", "008", "024", "047", "058", "006", "003"]
 STEPS = [20000, 40000, 80000, 120000, 160000]
 LEAKS = [rb"/home", rb"/tmp", rb"/mnt", rb"/srv", rb"runs/", rb"\.ckpt", rb"wsj0", rb"si_tr_s", rb"si_dt_", rb"si_et_",
          rb"@[a-z0-9-]+\.(com|org|ac\.il)", rb"GPU-[0-9a-f]{8}", rb"CATT_", rb"0_5s", rb"0_0s", rb"hadamard_e1", rb"wandb",
@@ -73,83 +73,94 @@ for p in files:
         hits += [m.decode() for m in WSJ0_ID.findall(data)]
     if hits:
         check(False, f"leak scan {p.relative_to(SITE)}: {sorted(set(hits))}")
-check(not any("leak scan" in f for f in failures), "leak scan clean (all files, including audio bytes)")
+# repository exports (examples/, results/tables, results/plots): text and figures only, leak-free, links resolve
+REPO = SITE.parent
+exp_files = [p for d in ("examples", "results") if (REPO / d).exists() for p in (REPO / d).rglob("*") if p.is_file()]
+check(all(p.suffix in (".md", ".txt", ".png", ".svg") for p in exp_files), f"exports: only .md, .txt, .png, .svg ({len(exp_files)} files)")
+for p in exp_files:
+    data = p.read_bytes()
+    hits = [pat.decode() for pat in LEAKS if re.search(pat, data, re.I)]
+    if p.suffix != ".png":
+        hits += [m.decode() for m in WSJ0_ID.findall(data)]
+    if hits:
+        check(False, f"leak scan {p.relative_to(REPO)}: {sorted(set(hits))}")
+links = [(p, l) for p in exp_files if p.suffix == ".md" for l in re.findall(r"\]\(([^)#]+)\)", p.read_text()) if not l.startswith("http")]
+check(all((p.parent / l).resolve().exists() for p, l in links), f"exports: all {len(links)} relative links resolve")
+check(not any("leak scan" in f for f in failures), "leak scan clean (site incl. audio bytes, examples/, results/)")
 
 meta = json.loads((SITE / "data/meta.json").read_text())
 examples = json.loads((SITE / "data/examples.json").read_text())
 results = json.loads((SITE / "data/results.json").read_text())
 training = json.loads((SITE / "data/training.json").read_text())
 
-check(sorted(m["key"] for m in meta["models"]) == sorted(MODELS), "five models C, F, B, D, E1 in data")
+check(sorted(m["key"] for m in meta["models"]) == sorted(MODELS), "five models in data")
 check('MODEL_KEYS = ["B", "C", "D", "E1", "F"]' in (SITE / "assets/js/common.js").read_text(), "display order B, C, D, E1, F")
-check(not any(k in t for t in [p.read_text() for p in files if p.suffix in (".js", ".css", ".html", ".json")] for k in ("★", "Suggested comparison", "featured", "FEATURED")),
-      "no listening guidance (featured comparisons, ★ markers)")
+text_all = [p.read_text() for p in files if p.suffix in (".js", ".css", ".html", ".json")]
+check(not any(k in t for t in text_all for k in ("★", "Suggested comparison", "featured", "FEATURED")), "no listening guidance")
 check(meta["audio_status"] == "approved", "audio status = approved")
-check([e["id"] for e in examples] == EXAMPLES, "six selected examples in order")
+check([e["id"] for e in examples] == EXAMPLES, "seven selected examples in order")
 
-# audio
+# audio: only the shown signals, byte-identical, consistent per example
 sha = meta["audio_sha256"]
 wavs = sorted(str(p.relative_to(SITE)) for p in files if p.suffix == ".wav")
 check(sorted(sha) == wavs, f"meta.audio_sha256 lists exactly the {len(wavs)} WAV files")
 bad = [f for f in wavs if hashlib.sha256((SITE / f).read_bytes()).hexdigest() != sha.get(f)]
 check(not bad, f"SHA-256 of every WAV matches meta.json {bad[:3]}")
 for e in examples:
+    shown = e["models"]
+    check(set(shown) <= {"C", "F", "E1"} and {"F", "E1"} <= set(shown) and (("C" in shown) == (e["id"] == "024")),
+          f"example {e['id']}: shown models {shown} (F, E1; C only for 024)")
     a = e["audio"]
-    want = {"mixture", "clean_s1", "clean_s2", "rev_s1", "rev_s2"} | {f"{m}_{t}" for m in MODELS for t in ("s1", "s2")}
-    check(set(a) == want, f"example {e['id']}: 15 signals (both targets)")
+    want = {"mixture", "clean_s1", "clean_s2", "rev_s1", "rev_s2"} | {f"{m}_{t}" for m in shown for t in ("s1", "s2")}
+    check(set(a) == want and all(f.startswith(f"audio/ex{e['id']}/") for f in a.values()), f"example {e['id']}: {len(want)} signals (both targets), no B/D audio")
     lengths = set()
     for f in a.values():
         info = wav_info((SITE / f).read_bytes())
         ok = info is not None and info[0] == [b"fmt ", b"data"] and info[1] == (1, 2, 16000, 64000, 4, 16)
         check(ok, f"{f}: RIFF fmt+data only, PCM 16-bit 16 kHz stereo") if not ok else None
         lengths.add(info[2] if info else None)
-    check(len(lengths) == 1, f"example {e['id']}: all signals have equal length")
-    check(abs(next(iter(lengths)) / 4 / 16000 - e["duration_s"]) < 0.01, f"example {e['id']}: duration matches audio")
+    check(len(lengths) == 1 and abs(next(iter(lengths)) / 4 / 16000 - e["duration_s"]) < 0.01, f"example {e['id']}: equal lengths, duration matches")
     for t in ("s1", "s2"):
         tt = e["targets"][t]
-        check(tt["azimuth"] == e["azimuth"][t] and tt["interferer_azimuth"] == e["azimuth"]["s2" if t == "s1" else "s1"],
-              f"example {e['id']} {t}: geometry consistent")
-        check(-90 <= tt["azimuth"] <= 90 and finite(tt["input_sir_db"]) and finite(tt["mixture_si_sdr"]),
-              f"example {e['id']} {t}: azimuth / SIR / mixture SI-SDR valid")
-        for m in MODELS:
+        ok = tt["azimuth"] == e["azimuth"][t] and tt["interferer_azimuth"] == e["azimuth"]["s2" if t == "s1" else "s1"]
+        ok &= -90 <= tt["azimuth"] <= 90 and finite(tt["input_sir_db"]) and finite(tt["mixture_si_sdr"]) and sorted(tt["models"]) == sorted(shown)
+        for m in shown:
             r = tt["models"][m]
-            ok = all(finite(r[k]) for k in ("si_sdr", "si_sdri")) and isinstance(r["success"], bool) and \
+            ok &= all(finite(r[k]) for k in ("si_sdr", "si_sdri")) and isinstance(r["success"], bool) and \
                 all(r[k] is None or finite(r[k]) for k in ("si_sir", "si_sar"))
-            ok &= abs((r["si_sdr"] - tt["mixture_si_sdr"]) - r["si_sdri"]) < 0.011        # SI-SDRi = SI-SDR - mixture
-            check(ok, f"example {e['id']} {t} {m}: metrics valid, SI-SDRi = SI-SDR - mixture") if not ok else None
-    check(abs(e["targets"]["s1"]["input_sir_db"] + e["targets"]["s2"]["input_sir_db"]) < 0.011,
-          f"example {e['id']}: target SIRs of s1 and s2 are opposite")
-check(not any("metrics valid" in f for f in failures), "example metric tables complete and SI-SDRi consistent")
+            ok &= abs((r["si_sdr"] - tt["mixture_si_sdr"]) - r["si_sdri"]) < 0.011 and 1.0 <= r["pesq"] <= 4.64
+        ok &= all(1.0 <= tt[f] <= 4.64 for f in ("mixture_pesq", "reverberant_pesq"))
+        check(ok, f"example {e['id']} {t}: geometry, metrics, SI-SDRi = SI-SDR - mixture")
+    check(abs(e["targets"]["s1"]["input_sir_db"] + e["targets"]["s2"]["input_sir_db"]) < 0.011, f"example {e['id']}: s1/s2 SIRs opposite")
+ex003 = examples[-1]
+check(ex003["listening"] == {"s1": "not extracted", "s2": "not extracted"} and all(ex003["targets"]["s1"]["models"][m]["success"] for m in ex003["models"]),
+      "003: listening observation kept separate from the (favourable) objective s1 flags")
 
-# aggregate plots
+# overall table and the two plots
 vg, vs = meta["sets"]["valgrid"], meta["sets"]["valsep64"]
-for name, block, nb in (("separation", results["separation"], 4), ("input_sir", results["input_sir"], 8)):
-    check(len(block["bins"]) == nb and block["step"] == 160000 and block["set"] == "valgrid", f"{name}: valgrid, 160k, {nb} bins")
-    for m in MODELS:
-        v = block["values"][m]
-        check(len(v) == nb and all(finite(s[k]) for s in v for k in ("si_sdri", "si_sir", "si_sar")),
-              f"{name} {m}: one measured value per bin (no gaps)") if len(v) != nb else None
-        check(all(s["n_decomp_requests"] == s["n_requests"] for s in v), f"{name} {m}: SI-SIR/SAR over all requests") \
-            if not all(s["n_decomp_requests"] == s["n_requests"] for s in v) else None
-        check([(s["n_requests"], s["n_mixtures"]) for s in v] == [(s["n_requests"], s["n_mixtures"]) for s in block["values"]["C"]],
-              f"{name} {m}: same counts as C (paired)") if m != "C" else None
-    c = block["values"]["C"]
-    check(sum(s["n_requests"] for s in c) == vg["n_requests"], f"{name}: requests sum to {vg['n_requests']}")
-    if name == "separation":
-        check(sum(s["n_mixtures"] for s in c) == vg["n_mixtures"] and all(s["n_requests"] == 2 * s["n_mixtures"] for s in c),
-              "separation: 2 requests per mixture, mixtures sum to 192")
-    else:
-        check(all(s["n_requests"] == s["n_mixtures"] for s in c), "input SIR: 1 request per mixture per bin")
 ov = results["overall"]
-check(ov["set"] == "valgrid" and ov["step"] == 160000 and sorted(ov["values"]) == sorted(MODELS), "overall: valgrid, 160k, five models")
-check(all(all(finite(v[k]) for k in ("si_sdr", "si_sdri", "si_sir", "si_sar", "success", "W", "ild_error_db", "itd_error_us"))
-          and (v["n_mixtures"], v["n_requests"], v["n_decomp_requests"]) == (vg["n_mixtures"], vg["n_requests"], vg["n_requests"])
-          and 0 <= v["W"] <= v["success"] <= 1 for v in ov["values"].values()), "overall: complete values, 192 / 384, W <= success")
-check(all(abs(ov["values"][m]["si_sdri"] - sum(s["si_sdri"] * s["n_mixtures"] for s in results["separation"]["values"][m]) / vg["n_mixtures"]) < 1e-3
-          for m in MODELS), "overall SI-SDRi = mixture-weighted mean of the separation bins")
-check(training["steps"] == STEPS and training["set"] == "valsep64", "training: measured checkpoints 20k/40k/80k/120k/160k only")
-check(all(len(training["values"][m]) == len(STEPS) and all(s["n_requests"] == vs["n_requests"] and s["n_mixtures"] == vs["n_mixtures"]
-          for s in training["values"][m]) for m in MODELS), "training: 128 requests / 64 mixtures at every step, every model")
+check(ov["set"] == "valgrid" and ov["step"] == 160000 and sorted(ov["values"]) == sorted(MODELS) and
+      all(all(finite(v[k]) for k in ("si_sdr", "si_sdri", "si_sir", "si_sar", "success", "W")) and
+          (v["n_mixtures"], v["n_requests"]) == (vg["n_mixtures"], vg["n_requests"]) and 0 <= v["W"] <= v["success"] <= 1
+          for v in ov["values"].values()), "overall: valgrid 160k, five models, 192 / 384, W <= success")
+pq = results["pesq"]
+check(pq["set"] == "valsep64" and all(1.0 <= pq["values"][k]["pesq"] <= 4.64 and pq["values"][k]["n_mixtures"] == vs["n_mixtures"]
+      for k in MODELS + ["mixture", "reverberant_target"]), "PESQ table: valsep64, five models + mixture + reverberant target, within 1-4.64")
+b = results["input_sir"]
+check(b["set"] == "valgrid" and b["step"] == 160000 and len(b["bins"]) == 8 and all(len(b["values"][m]) == 8 for m in MODELS),
+      "initial-SIR plot: valgrid 160k, 8 bins, every model")
+c = b["values"]["C"]
+check(sum(x["n_requests"] for x in c) == vg["n_requests"] and all(x["n_requests"] == x["n_mixtures"] for x in c), "initial SIR: 384 requests, one per mixture per bin")
+check(all(abs(ov["values"][m]["si_sdri"] - sum(x["si_sdri"] for x in b["values"][m]) / 8) < 1e-3 for m in MODELS),
+      "overall SI-SDRi = mean of the 8 equal-size SIR bins")
+check(training["steps"] == STEPS and training["set"] == "valsep64" and all(len(training["values"][m]) == len(STEPS) and
+      all(x["n_requests"] == vs["n_requests"] and x["n_mixtures"] == vs["n_mixtures"] for x in training["values"][m]) for m in MODELS),
+      "training: measured checkpoints 20k/40k/80k/120k/160k only, 128 / 64 at every step")
+blocks = [b["values"], training["values"]]
+check(all(abs(x["si_sdr"] - x["mixture_si_sdr"] - x["si_sdri"]) < 1e-3 for bl in blocks for m in MODELS for x in bl[m]),
+      "SI-SDR - mixture SI-SDR = SI-SDRi at every bin and checkpoint")
+check(all([x["mixture_si_sdr"] for x in bl[m]] == [x["mixture_si_sdr"] for x in bl["C"]] for bl in blocks for m in MODELS),
+      "mixture SI-SDR identical across models (paired requests)")
 
 # references and statements
 html = (SITE / "index.html").read_text()
@@ -160,9 +171,8 @@ imports = [(n, i) for n, t in js.items() for i in re.findall(r'from "\./([^"]+)"
 check(all((SITE / "assets/js" / i).exists() for _, i in imports), "JS module imports resolve")
 check('name="robots" content="noindex' in html and (SITE / "robots.txt").exists(), "preview is noindex (meta + robots.txt)")
 text = html + "".join(js.values())
-for s in ("speakers also appear in training", "not representative", "No held-out test-set results",
-          "no statistically significant superiority", "Only the checkpoints shown were evaluated", "headphones"):
-    check(s in text, f'statement present: "{s}"')
+for s_ in ("Speakers seen during training", "Unseen utterances and room", "No held-out test results", "not representative"):
+    check(s_ in text, f'statement present: "{s_}"')
 
 for line in notes + failures:
     print(line)

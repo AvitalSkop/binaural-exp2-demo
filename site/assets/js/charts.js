@@ -44,6 +44,9 @@ export class LineChart {
 
   val(key, i) { const s = this.cfg.values[key][i]; return s ? s[this.metric] : null; }
 
+  /** Optional reference series for the current metric, e.g. the unprocessed mixture for SI-SDR: {label, values}. */
+  base() { return this.cfg.baseline ? this.cfg.baseline(this.metric) : null; }
+
   draw() {
     const { xLabels, xValues, models } = this.cfg;
     const W = Math.max(280, this.box.clientWidth || 520);
@@ -61,21 +64,30 @@ export class LineChart {
     const band = xValues ? Math.min(...xs.slice(1).map((x, i) => x - xs[i])) : pw / n;
     const dodge = xValues ? 0 : Math.min(6, band * 0.07);   // numeric (training-step) axis: true positions, no offset
 
-    const all = models.flatMap((md) => xLabels.map((_, i) => this.val(md.key, i))).filter((v) => v !== null);
+    const base = this.base(), unit = this.cfg.unit ?? " dB", dg = this.cfg.digits ?? 2;
+    const all = models.flatMap((md) => xLabels.map((_, i) => this.val(md.key, i))).concat(base ? base.values : []).filter((v) => v !== null);
     let lo = Math.min(...all), hi = Math.max(...all);
     const pad = (hi - lo) * 0.12 || 1;
-    const yt = ticks(lo - pad, hi + pad);
-    lo = yt[0]; hi = yt[yt.length - 1];
-    const y = (v) => m.t + ph - ((v - lo) / (hi - lo)) * ph;
+    let yt, y;
+    if (this.cfg.logY) {          // log axis (loss curves): shared range given by the caller
+      const [a, b] = this.cfg.yRange, L = Math.log10;
+      yt = [0.005, 0.01, 0.02, 0.05, 0.1, 0.2].filter((t) => t >= a * 0.999 && t <= b * 1.001);
+      y = (v) => m.t + ph - ((L(v) - L(a)) / (L(b) - L(a))) * ph;
+    } else {
+      yt = this.cfg.yRange ? ticks(...this.cfg.yRange) : ticks(lo - pad, hi + pad);
+      lo = yt[0]; hi = yt[yt.length - 1];
+      y = (v) => m.t + ph - ((v - lo) / (hi - lo)) * ph;
+    }
 
     const s = [];
     s.push(`<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${this.cfg.title}: ${this.metricLabel}">`);
     for (const t of yt) {
       s.push(`<line class="${t === 0 && lo < 0 ? "baseline" : "grid"}" x1="${m.l}" x2="${W - m.r}" y1="${y(t)}" y2="${y(t)}"/>`);
-      s.push(`<text x="${m.l - 8}" y="${y(t) + 4}" text-anchor="end">${fmt(t, Number.isInteger(t) ? 0 : 1)}</text>`);
+      s.push(`<text x="${m.l - 8}" y="${y(t) + 4}" text-anchor="end">${this.cfg.logY ? String(t) : fmt(t, Number.isInteger(t) ? 0 : (this.cfg.tickDigits ?? 1))}</text>`);
     }
     s.push(`<text class="axis-title" transform="translate(12 ${m.t + ph / 2}) rotate(-90)" text-anchor="middle">${this.metricLabel}</text>`);
     xLabels.forEach((lab, i) => {
+      if (this.cfg.showTick && !this.cfg.showTick(i)) return;
       if (rotate) {   // narrow screens: rotated labels; n stays in the tooltip and the data table
         s.push(`<text transform="translate(${xs[i] + 4} ${m.t + ph + 12}) rotate(-40)" text-anchor="end" style="fill:var(--ink2)">${lab}</text>`);
         return;
@@ -86,13 +98,20 @@ export class LineChart {
     });
     if (this.cfg.xTitle) s.push(`<text class="axis-title" x="${m.l + pw / 2}" y="${H - 3}" text-anchor="middle">${this.cfg.xTitle}</text>`);
     s.push(`<line class="cross" x1="0" x2="0" y1="${m.t}" y2="${m.t + ph}" visibility="hidden"/>`);
+    if (base) {
+      let d = "", pen = false;
+      base.values.forEach((v, i) => { if (v === null) { pen = false; return; } d += `${pen ? "L" : "M"}${xs[i]},${y(v)}`; pen = true; });
+      s.push(`<g class="series base"><path class="line" d="${d}" stroke="var(--ink2)" stroke-dasharray="5 4"/>`);
+      if (this.cfg.markers !== false) base.values.forEach((v, i) => { if (v !== null) s.push(`<circle cx="${xs[i]}" cy="${y(v)}" r="4" fill="var(--card)" stroke="var(--ink2)" stroke-width="1.5"/>`); });
+      s.push("</g>");
+    }
     models.forEach((md, k) => {
       const off = (k - (models.length - 1) / 2) * dodge;
       const pts = xLabels.map((_, i) => [xs[i] + off, this.val(md.key, i)]);
       let d = "", pen = false;
       for (const [px, v] of pts) { if (v === null) { pen = false; continue; } d += `${pen ? "L" : "M"}${px},${y(v)}`; pen = true; }
       s.push(`<g class="series"><path class="line" d="${d}" stroke="${color(md.key)}"/>`);
-      for (const [px, v] of pts) if (v !== null) s.push(`<path class="pt" d="${markerPath(MARKERS[md.key], px, y(v), 4.5)}" fill="${color(md.key)}"/>`);
+      if (this.cfg.markers !== false) for (const [px, v] of pts) if (v !== null) s.push(`<path class="pt" d="${markerPath(MARKERS[md.key], px, y(v), 4.5)}" fill="${color(md.key)}"/>`);
       s.push("</g>");
     });
     xLabels.forEach((_, i) => {
@@ -108,7 +127,8 @@ export class LineChart {
       cross.setAttribute("x1", xs[i]); cross.setAttribute("x2", xs[i]); cross.setAttribute("visibility", "visible");
       this.tip.innerHTML = `<div class="tip-h">${this.cfg.tipTitle ? this.cfg.tipTitle(i) : xLabels[i]}</div>
         <div class="tip-n">${this.cfg.tipN(i, this.metric)}</div>` +
-        models.map((md) => `<div class="tip-r">${chip(md.key)}<span>${md.key} ${md.name}</span><b>${fmt(this.val(md.key, i), 2, true)} dB</b></div>`).join("");
+        models.map((md) => `<div class="tip-r">${chip(md.key)}<span>${md.key} ${md.name}</span><b>${fmt(this.val(md.key, i), dg, unit === " dB")}${unit}</b></div>`).join("") +
+        (base ? `<div class="tip-r"><svg class="mk" viewBox="-7 -7 14 14" aria-hidden="true"><circle r="4" fill="none" stroke="var(--ink2)" stroke-width="1.5"/></svg><span>${base.label}</span><b>${fmt(base.values[i], dg, unit === " dB")}${unit}</b></div>` : "");
       this.tip.hidden = false;
       const tw = this.tip.offsetWidth, x = xs[i] + 14 + tw > W ? xs[i] - 14 - tw : xs[i] + 14;
       this.tip.style.left = `${Math.max(0, x)}px`;
@@ -124,9 +144,10 @@ export class LineChart {
 
   table() {
     const { xLabels, models } = this.cfg;
-    const rows = xLabels.map((lab, i) => `<tr><td>${lab}</td>${models.map((md) => `<td>${fmt(this.val(md.key, i), 2, true)}</td>`).join("")}<td>${this.cfg.tableN(i, this.metric)}</td></tr>`).join("");
+    const base = this.base(), dg = this.cfg.digits ?? 2, sg = (this.cfg.unit ?? " dB") === " dB";
+    const rows = xLabels.map((lab, i) => `<tr><td>${lab}</td>${models.map((md) => `<td>${fmt(this.val(md.key, i), dg, sg)}</td>`).join("")}${base ? `<td>${fmt(base.values[i], dg, sg)}</td>` : ""}<td>${this.cfg.tableN(i, this.metric)}</td></tr>`).join("");
     this.details.innerHTML = `<summary>Data table</summary><div class="table-wrap"><table>
-      <thead><tr><th>${this.cfg.xTitle || "Checkpoint"}</th>${models.map((md) => `<th>${md.key}</th>`).join("")}<th>n</th></tr></thead>
+      <thead><tr><th>${this.cfg.xTitle || "Checkpoint"}</th>${models.map((md) => `<th>${md.key}</th>`).join("")}${base ? `<th>${base.label}</th>` : ""}<th>n</th></tr></thead>
       <tbody>${rows}</tbody><caption>${this.metricLabel}, mean per bin; n = ${this.cfg.tableNText}.</caption></table></div>`;
   }
 }

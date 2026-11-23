@@ -100,7 +100,7 @@ export function initTips() {
   };
   const hide = () => { if (owner) owner.removeAttribute("aria-describedby"); owner = null; box.hidden = true; };
   document.addEventListener("pointerover", (e) => { const el = e.target.closest("[data-tip]"); if (el) show(el); });
-  document.addEventListener("pointerout", (e) => { if (owner && !owner.contains(e.relatedTarget)) hide(); });
+  document.addEventListener("pointerout", (e) => { if (owner && owner !== document.activeElement && !owner.contains(e.relatedTarget)) hide(); });
   document.addEventListener("focusin", (e) => { const el = e.target.closest("[data-tip]"); el ? show(el) : hide(); });
   document.addEventListener("focusout", hide);
   document.addEventListener("click", (e) => { const el = e.target.closest("[data-tip]"); if (el) { e.preventDefault(); show(el); } else hide(); });

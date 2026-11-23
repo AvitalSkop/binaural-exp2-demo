@@ -10,237 +10,212 @@
  "values": {
   "C": [
    {
+    "si_sdr": -8.4267,
     "si_sdri": 1.3143,
     "si_sir": 6.6818,
-    "si_sar": -6.5155,
-    "success": 0.7109,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -7.3441,
     "si_sdri": 2.3969,
     "si_sir": 8.9232,
-    "si_sar": -5.5233,
-    "success": 0.7812,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -5.0242,
     "si_sdri": 4.7168,
     "si_sir": 11.3376,
-    "si_sar": -3.3134,
-    "success": 0.8516,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -3.1931,
     "si_sdri": 6.5479,
     "si_sir": 14.1242,
-    "si_sar": -1.6363,
-    "success": 0.8672,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -1.8537,
     "si_sdri": 7.8873,
     "si_sir": 17.2062,
-    "si_sar": -0.7514,
-    "success": 0.9375,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    }
   ],
   "F": [
    {
+    "si_sdr": -8.475,
     "si_sdri": 1.266,
     "si_sir": 8.0749,
-    "si_sar": -6.7899,
-    "success": 0.7109,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -5.7447,
     "si_sdri": 3.9963,
     "si_sir": 10.7699,
-    "si_sar": -4.1219,
-    "success": 0.8203,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -2.5997,
     "si_sdri": 7.1414,
     "si_sir": 15.0327,
-    "si_sar": -1.3801,
-    "success": 0.8906,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -1.0329,
     "si_sdri": 8.7081,
     "si_sir": 17.8307,
-    "si_sar": -0.1725,
-    "success": 0.9375,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -0.1923,
     "si_sdri": 9.5487,
     "si_sir": 20.0615,
-    "si_sar": 0.5016,
-    "success": 0.9609,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    }
   ],
   "B": [
    {
+    "si_sdr": -7.2519,
     "si_sdri": 2.4891,
     "si_sir": 9.6972,
-    "si_sar": -5.8498,
-    "success": 0.8672,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -5.8652,
     "si_sdri": 3.8758,
     "si_sir": 11.3522,
-    "si_sar": -4.5008,
-    "success": 0.9062,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -3.8414,
     "si_sdri": 5.8996,
     "si_sir": 12.2101,
-    "si_sar": -2.4606,
-    "success": 0.8672,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -1.8691,
     "si_sdri": 7.8719,
     "si_sir": 16.6527,
-    "si_sar": -0.9477,
-    "success": 0.9297,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -0.864,
     "si_sdri": 8.877,
     "si_sir": 17.7311,
-    "si_sar": 0.0063,
-    "success": 0.9297,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    }
   ],
   "D": [
    {
+    "si_sdr": -7.3596,
     "si_sdri": 2.3814,
     "si_sir": 9.6592,
-    "si_sar": -6.0077,
-    "success": 0.8672,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -5.6351,
     "si_sdri": 4.1059,
     "si_sir": 12.6347,
-    "si_sar": -4.5387,
-    "success": 0.9062,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -3.9541,
     "si_sdri": 5.7869,
     "si_sir": 14.1723,
-    "si_sar": -2.8883,
-    "success": 0.9219,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -1.7078,
     "si_sdri": 8.0332,
     "si_sir": 16.7715,
-    "si_sar": -0.6612,
-    "success": 0.9297,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -0.8955,
     "si_sdri": 8.8455,
     "si_sir": 18.7981,
-    "si_sar": 0.142,
-    "success": 0.9297,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    }
   ],
   "E1": [
    {
+    "si_sdr": -7.4927,
     "si_sdri": 2.2483,
     "si_sir": 8.7756,
-    "si_sar": -5.9242,
-    "success": 0.8438,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -6.3065,
     "si_sdri": 3.4345,
     "si_sir": 9.9694,
-    "si_sar": -4.93,
-    "success": 0.8828,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -4.0663,
     "si_sdri": 5.6747,
     "si_sir": 14.3447,
-    "si_sar": -3.0499,
-    "success": 0.9219,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -1.7728,
     "si_sdri": 7.9682,
     "si_sir": 18.1582,
-    "si_sar": -1.0669,
-    "success": 0.9375,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    },
    {
+    "si_sdr": -0.7867,
     "si_sdri": 8.9543,
     "si_sir": 20.4785,
-    "si_sar": -0.1876,
-    "success": 0.9688,
+    "mixture_si_sdr": -9.741,
     "n_requests": 128,
-    "n_mixtures": 64,
-    "n_decomp_requests": 128
+    "n_mixtures": 64
    }
   ]
  },

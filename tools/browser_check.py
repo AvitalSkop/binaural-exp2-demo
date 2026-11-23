@@ -99,32 +99,32 @@ async def run(url, out, dark, report):
             await b.cmd("browsingContext.setViewport", context=ctx, viewport={"width": w, "height": h})
             await b.cmd("browsingContext.navigate", context=ctx, url=url, wait="complete")
             for _ in range(100):
-                if await b.js(ctx, "document.querySelectorAll('details.example').length === 6 && !!document.querySelector('#chart-training svg') && !document.querySelector('#example-041 .play').disabled"):
+                if await b.js(ctx, "document.querySelectorAll('details.example').length === 7 && !!document.querySelector('#chart-training svg') && !document.querySelector('#example-041 .aplay').disabled"):
                     break
                 await asyncio.sleep(0.2)
             dom = await b.js(ctx, """JSON.stringify({
                 examples: document.querySelectorAll('details.example').length,
+                ids: [...document.querySelectorAll('details.example')].map(d => d.id.slice(8)).join(' '),
                 open: [...document.querySelectorAll('details.example[open]')].map(d => d.id),
-                tables: document.querySelectorAll('#example-041 table tbody tr').length,
-                charts: [...document.querySelectorAll('.chart svg')].length,
-                markers: document.querySelectorAll('#chart-separation .pt').length,
-                sirMarkers: document.querySelectorAll('#chart-sir .pt').length,
+                tableRows: document.querySelectorAll('#example-041 .ex-table tbody tr').length,
+                charts: document.querySelectorAll('.chart svg').length,
                 trainMarkers: document.querySelectorAll('#chart-training .pt').length,
-                loaded: !document.querySelector('#example-041 .play').disabled,
+                sirMarkers: document.querySelectorAll('#chart-sir .pt').length,
+                loaded: !document.querySelector('#example-041 .aplay').disabled,
+                rows041: [...document.querySelectorAll('#example-041 .arow')].map(r => r.dataset.role).join(' '),
+                rows024: [...document.querySelectorAll('#example-024 .arow')].map(r => r.dataset.role).join(' '),
+                bdRows: document.querySelectorAll('.arow[data-role="B"], .arow[data-role="D"]').length,
                 hscroll: document.documentElement.scrollWidth > window.innerWidth + 1,
                 overflow: [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > window.innerWidth + 1 && !e.closest('.table-wrap'))
                   .slice(0, 6).map(e => `${e.tagName}.${e.className.baseVal ?? e.className} ${Math.round(e.getBoundingClientRect().right)}`),
-                protocol: document.querySelector('[data-protocol]').textContent.length,
+                tableOverflow: Math.max(0, ...[...document.querySelectorAll('details[open] .table-wrap, .overall .table-wrap')].map(w => w.scrollWidth - w.clientWidth)),
                 theme: getComputedStyle(document.body).backgroundColor,
-                modelRow: [...document.querySelectorAll('#example-041 .tiles.models .tile')].map(t => t.offsetTop).every((v, i, a) => v === a[0]),
-                modelOrder: [...document.querySelectorAll('#example-041 .tiles.models .tile')].map(t => t.dataset.role).join(' '),
-                legendOrder: document.querySelector('[data-legend]').textContent.replace(/\s+/g, ' ').trim(),
-                featured: document.querySelectorAll('.featured, .step, .tile.feat, .star').length,
+                legend: document.querySelector('[data-legend]').textContent.replace(/\s+/g, ' ').trim(),
                 bestCells: document.querySelectorAll('#example-041 td.best').length,
                 overallRows: [...document.querySelectorAll('.overall-table tbody tr')].map(r => r.querySelector('b').textContent).join(' '),
-                overallBest: [...document.querySelectorAll('.overall-table td.best')].map(td => [...td.parentNode.children].indexOf(td) + ':' + td.parentNode.querySelector('b').textContent).join(' '),
-                overallOverflow: Math.max(0, ...[...document.querySelectorAll('.overall .table-wrap')].map(w => w.scrollWidth - w.clientWidth)),
-                tableOverflow: Math.max(0, ...[...document.querySelectorAll('details[open] .table-wrap')].map(w => w.scrollWidth - w.clientWidth)),
+                overallCols: document.querySelectorAll('.overall-table thead th').length,
+                protocolOpen: document.querySelector('details.protocol').open,
+                note003: (document.querySelector('#example-003 .listen-note') || {}).textContent || null,
                 geoWidth: Math.round(document.querySelector('#example-041 .geometry svg').getBoundingClientRect().width) })""")
             report[f"{mode}/{name}/dom"] = dom
             if name == "desktop" and not dark:
@@ -142,36 +142,45 @@ async def run(url, out, dark, report):
                 t3 = await b.js(ctx, state)
                 report["theme_toggle"] = {"initial": t0, "after_click": t1, "after_reload": t2, "after_second_click": t3}
                 for _ in range(50):
-                    if await b.js(ctx, "!document.querySelector('#example-041 .play').disabled"):
+                    if await b.js(ctx, "!document.querySelector('#example-041 .aplay').disabled"):
                         break
                     await asyncio.sleep(0.2)
-                await b.click(ctx, f"{ex} .play")
+                rowstate = lambda sel: f"""JSON.stringify({{playing: [...document.querySelectorAll('.arow.playing')].map(r => r.closest('details').id.slice(8) + ':' + r.dataset.role),
+                    times: Object.fromEntries([...document.querySelectorAll('{sel} .arow')].map(r => [r.dataset.role, r.querySelector('.atime').textContent.split(' /')[0]])),
+                    head: (document.querySelector('{sel} .ex-table thead th') || {{}}).textContent, geo: document.querySelector('{sel} .geometry svg').getAttribute('aria-label')}})"""
+                await b.click(ctx, f'{ex} .arow[data-role="mixture"] .aplay')
                 await asyncio.sleep(1.0)
-                st1 = await b.js(ctx, f"JSON.stringify({{label: document.querySelector('{ex} .play').getAttribute('aria-label'), time: document.querySelector('{ex} .time').textContent}})")
-                await b.click(ctx, f'{ex} .tile[data-role="E1"]')
+                st1 = await b.js(ctx, rowstate(ex))
+                await b.click(ctx, f'{ex} .arow[data-role="F"] .aplay')
                 await asyncio.sleep(0.6)
-                st2 = await b.js(ctx, f"JSON.stringify({{pressed: document.querySelector('{ex} .tile[aria-pressed=\"true\"]').dataset.role, active: document.querySelector('{ex} tr.active td').textContent.trim(), time: document.querySelector('{ex} .time').textContent}})")
+                st2 = await b.js(ctx, rowstate(ex))
                 await b.click(ctx, f"{ex} .target-row .seg button:nth-child(2)")
                 await asyncio.sleep(0.6)
-                st3 = await b.js(ctx, f"JSON.stringify({{pressed: document.querySelector('{ex} .tile[aria-pressed=\"true\"]').dataset.role, head: document.querySelector('{ex} thead th').textContent, geo: document.querySelector('{ex} .geometry svg').getAttribute('aria-label'), time: document.querySelector('{ex} .time').textContent, label: document.querySelector('{ex} .play').getAttribute('aria-label')}})")
-                await b.click(ctx, f"{ex} .play")
+                st3 = await b.js(ctx, rowstate(ex))
+                await b.click(ctx, '#example-003 > summary')
+                for _ in range(50):
+                    if await b.js(ctx, "!document.querySelector('#example-003 .aplay').disabled"):
+                        break
+                    await asyncio.sleep(0.2)
+                await b.click(ctx, '#example-003 .arow[data-role="E1"] .aplay')
+                await asyncio.sleep(0.6)
+                st4 = await b.js(ctx, rowstate("#example-003"))
+                await b.click(ctx, '#example-003 .arow[data-role="E1"] .aplay')
+                await asyncio.sleep(0.3)
+                st5 = await b.js(ctx, rowstate("#example-003"))
                 await b.js(ctx, "document.querySelector('#example-041 thead .info').focus(), JSON.stringify('ok')")
                 await asyncio.sleep(0.2)
                 tipbox = await b.js(ctx, "JSON.stringify({visible: !document.getElementById('tipbox').hidden, text: document.getElementById('tipbox').textContent.slice(0, 60)})")
-                report["interaction_extra"] = {"info_tooltip": tipbox}
-                await b.click(ctx, '[data-metric-group="results"] .seg button:nth-child(2)')
+                await b.click(ctx, '[data-metric-group="training"] .seg button:nth-child(2)')
                 await asyncio.sleep(0.3)
-                axis = await b.js(ctx, "JSON.stringify(document.querySelector('#chart-separation .axis-title').textContent)")
+                axis = await b.js(ctx, "JSON.stringify([document.querySelector('#chart-training .axis-title').textContent, document.querySelectorAll('#chart-training .base').length])")
                 await b.hover(ctx, '#chart-sir .hit[data-i="0"]')
                 await asyncio.sleep(0.3)
                 tip = await b.js(ctx, "JSON.stringify({visible: !document.querySelector('#chart-sir .tip').hidden, text: document.querySelector('#chart-sir .tip').textContent.replace(/\\s+/g, ' ').trim()})")
-                await b.click(ctx, '#example-003 > summary')
-                await asyncio.sleep(1.5)
-                st4 = await b.js(ctx, "JSON.stringify({open003: document.querySelector('#example-003').open, loaded003: !document.querySelector('#example-003 .play').disabled, fails: [...document.querySelectorAll('#example-003 .no')].length, target: document.querySelector('#example-003 thead th').textContent})")
-                report["interaction"] = {"after_play": st1, "after_E1": st2, "after_target_s2": st3, "metric_axis": axis,
-                                         "tooltip": tip, "example003": st4,
-                                         "audio_state": await b.js(ctx, "JSON.stringify(typeof AudioContext)")}
-                await b.click(ctx, '[data-metric-group="results"] .seg button:nth-child(1)')
+                report["interaction"] = {"mixture_playing": st1, "F_started_mixture_paused": st2, "target_s2_F_continues": st3,
+                                         "other_example_pauses_041": st4, "pause_003": st5, "info_tooltip": tipbox,
+                                         "training_metric_SI-SDRi": axis, "sir_tooltip": tip}
+                await b.click(ctx, '[data-metric-group="training"] .seg button:nth-child(1)')
                 await b.js(ctx, "window.scrollTo({top: 0, behavior: 'instant'}), JSON.stringify(1)")
             shot = await b.cmd("browsingContext.captureScreenshot", context=ctx, origin="document")
             (out / f"{mode}_{name}.png").write_bytes(base64.b64decode(shot["data"]))

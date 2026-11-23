@@ -1,0 +1,23 @@
+Example 006: Residual interference: Hadamard compared with FiLM
+For target s2, Hadamard (E1) suppresses the interfering speaker more effectively than FiLM (F), particularly during pauses in the target speech.
+
+s1 at +15 deg, s2 at +25 deg (0 = front, positive = right), separation 10 deg.
+
+Requested s1 at +15 deg, initial target SIR +0.8 dB
+Signal              SI-SDR  SI-SDRi  SI-SIR  SI-SAR  PESQ  Target selected
+------------------  ------  -------  ------  ------  ----  ---------------
+Mixture               -8.7        -       -       -  1.07                -
+Reverberant target       -        -       -       -  1.21                -
+E1 Hadamard            1.6    +10.3    20.9     1.6  1.26              yes
+F FiLM                 3.5    +12.2    26.6     3.5  1.36              yes
+
+Requested s2 at +25 deg, initial target SIR -0.8 dB
+Signal              SI-SDR  SI-SDRi  SI-SIR  SI-SAR  PESQ  Target selected
+------------------  ------  -------  ------  ------  ----  ---------------
+Mixture              -10.0        -       -       -  1.07                -
+Reverberant target       -        -       -       -  1.59                -
+E1 Hadamard           -0.4     +9.6    16.7    -0.2  1.16              yes
+F FiLM                -3.5     +6.5     5.8    -1.9  1.07              yes
+
+Metrics: binaural (both ears jointly), against the near-anechoic image of the requested speaker; SI metrics in dB.
+Development (cross-validation) split: speakers seen during training, unseen utterances and room. No held-out test results.

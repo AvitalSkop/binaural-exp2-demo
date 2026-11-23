@@ -1,0 +1,13 @@
+PESQ (valsep64, 64 mixtures / 128 target requests, 160,000 steps; wideband (ITU-T P.862.2), 16 kHz, mean of left and right ear)
+Metrics: binaural (both ears jointly), against the near-anechoic image of the requested speaker; SI metrics in dB.
+Development (cross-validation) split: speakers seen during training, unseen utterances and room. No held-out test results.
+
+Signal              PESQ
+------------------  ----
+B Spatial Features  1.29
+C Concat            1.24
+D TCSA              1.36
+E1 Hadamard         1.30
+F FiLM              1.36
+Mixture             1.11
+Reverberant target  1.38

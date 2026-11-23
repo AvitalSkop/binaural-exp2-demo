@@ -1,12 +1,12 @@
 // Top-view binaural geometry: listener at the centre facing up (0° = front, positive azimuth = right),
 // requested speaker (filled, solid ray), interfering speaker (hollow, dashed ray), angular separation arc.
-import { fmtDeg } from "./common.js";
+import { fmt, fmtDeg } from "./common.js";
 
 const W = 340, H = 205, CX = 170, CY = 178, R = 128;
 const rad = (a) => (a * Math.PI) / 180;
 const pt = (a, r) => [CX + r * Math.sin(rad(a)), CY - r * Math.cos(rad(a))];
 
-export function geometrySVG(target, interf, targetName, interfName) {
+export function geometrySVG(target, interf, targetName, interfName, sirDb) {
   const parts = [];
   // frontal half-circle and ticks every 15°
   const [x0, y0] = pt(-90, R), [x1, y1] = pt(90, R);
@@ -66,6 +66,8 @@ export function geometrySVG(target, interf, targetName, interfName) {
   parts.push(`<path d="M${CX - 5},${CY - 15} L${CX},${CY - 23} L${CX + 5},${CY - 15}" fill="var(--soft)" stroke="var(--ink2)" stroke-width="1.5" stroke-linejoin="round"/>`);
   parts.push(`<rect x="${CX - 20}" y="${CY - 5}" width="4" height="10" rx="2" fill="var(--ink2)"/><rect x="${CX + 16}" y="${CY - 5}" width="4" height="10" rx="2" fill="var(--ink2)"/>`);
 
-  const title = `Requested speaker ${targetName} at ${fmtDeg(target)}, interfering speaker ${interfName} at ${fmtDeg(interf)}, separation ${sep}°.`;
-  return `<svg viewBox="-46 -10 ${W + 92} ${H + 12}" role="img" aria-label="${title}"><title>${title}</title>${parts.join("")}</svg>`;
+  // facts under the listener: separation and initial target SIR (requested over interfering speaker, dB)
+  parts.push(`<text x="${CX}" y="${CY + 44}" text-anchor="middle" font-size="14" fill="var(--ink2)">Separation <tspan font-weight="700" fill="var(--ink)">${sep}°</tspan>   ·   Initial target SIR <tspan font-weight="700" fill="var(--ink)">${fmt(sirDb, 1, true)} dB</tspan></text>`);
+  const title = `Requested speaker ${targetName} at ${fmtDeg(target)}, interfering speaker ${interfName} at ${fmtDeg(interf)}, separation ${sep}°, initial target SIR ${fmt(sirDb, 1, true)} dB.`;
+  return `<svg viewBox="-46 -10 ${W + 92} ${H + 62}" role="img" aria-label="${title}"><title>${title}</title>${parts.join("")}</svg>`;
 }

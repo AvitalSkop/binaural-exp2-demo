@@ -15,57 +15,45 @@
 <body>
 <a class="skip" href="#listening">Skip to listening examples</a>
 <header class="site-header">
-  <div class="wrap">
-    <div class="topbar"><p class="eyebrow">Research demo · Experiment 2</p>
-      <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch colour theme"></button></div>
-    <h1>Binaural HRTF-Conditioned Target Speaker Extraction</h1>
-    <p class="lede">A diffusion model is given a binaural two-speaker mixture and the HRTF of a requested direction, and aims to
-      extract that speaker while reducing reverberation. Five variants differ only in how the HRTF conditions the network.</p>
-    <p class="headphones" role="note"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path d="M4 14v-2a8 8 0 0 1 16 0v2" fill="none" stroke="currentColor" stroke-width="2"/><rect x="3" y="14" width="4" height="7" rx="1.5" fill="currentColor"/><rect x="17" y="14" width="4" height="7" rx="1.5" fill="currentColor"/></svg>
-      <span>Binaural spatial perception should be evaluated using headphones.</span></p>
-    <nav class="toc" aria-label="Sections">
-      <a href="#listening">Listening examples</a><a href="#results">Evaluation results</a><a href="#training">Training progression</a><a href="#protocol">Evaluation protocol</a>
-    </nav>
+  <div class="wrap topbar">
+    <div>
+      <p class="eyebrow">Experiment 2</p>
+      <h1>Binaural HRTF-Conditioned Target Speaker Extraction</h1>
+    </div>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Switch colour theme"></button>
   </div>
+  <nav class="wrap toc" aria-label="Sections"><a href="#listening">Examples</a><a href="#results">Results</a><a href="#protocol">Protocol</a></nav>
 </header>
 
 <main class="wrap">
   <section id="listening" aria-labelledby="h-listening">
     <h2 id="h-listening">Listening examples</h2>
-    <p class="section-intro">Choose the requested speaker and switch signals during playback; the position is kept.
-      <span class="caveat">Examples were selected by listening and are not representative of average performance.</span></p>
-    <div class="model-legend" data-legend></div>
+    <p class="small">Selected examples; not representative of average performance.</p>
     <div id="examples" class="examples"><p class="loading">Loading examples…</p></div>
   </section>
 
   <section id="results" aria-labelledby="h-results">
-    <h2 id="h-results">Evaluation results</h2>
-    <p class="section-intro" data-results-intro></p>
+    <h2 id="h-results">Results</h2>
     <div class="overall" id="overall"></div>
-    <h3 class="sub-h">By condition</h3>
-    <div class="controls" role="radiogroup" aria-label="Metric" data-metric-group="results"></div>
     <div class="model-legend" data-legend></div>
     <div class="chart-grid">
-      <figure class="chart-card" id="chart-separation"></figure>
-      <figure class="chart-card" id="chart-sir"></figure>
+      <div class="plot">
+        <div class="controls" data-metric-group="training"></div>
+        <figure class="chart-card" id="chart-training"></figure>
+      </div>
+      <div class="plot">
+        <div class="controls" data-metric-group="sir"></div>
+        <figure class="chart-card" id="chart-sir"></figure>
+      </div>
     </div>
   </section>
 
-  <section id="training" aria-labelledby="h-training">
-    <h2 id="h-training">Training progression</h2>
-    <p class="section-intro" data-training-intro></p>
-    <div class="controls" role="radiogroup" aria-label="Metric" data-metric-group="training"></div>
-    <div class="model-legend" data-legend></div>
-    <figure class="chart-card wide" id="chart-training"></figure>
-  </section>
-
   <section id="protocol" aria-labelledby="h-protocol">
-    <h2 id="h-protocol">Evaluation protocol</h2>
-    <div class="protocol" data-protocol></div>
+    <details class="protocol"><summary><h2 id="h-protocol">Evaluation protocol</h2></summary><div data-protocol></div></details>
   </section>
 </main>
 
-<footer class="site-footer"><div class="wrap"><p>Research demo, preview build.</p></div></footer>
+<footer class="site-footer"><div class="wrap"><p>Research demo.</p></div></footer>
 <noscript><p class="wrap">This page needs JavaScript for audio playback and charts.</p></noscript>
 </body>
 </html>

@@ -203,3 +203,65 @@ details.defs dd { margin: 0 0 .2rem; }
 .scroll-hint { display: none; font-size: .78rem; color: var(--muted); margin: 0 0 4px; }
 @media (max-width: 760px) { .scroll-hint { display: block; } .overall-table td:first-child { box-shadow: 1px 0 0 var(--line); } }
 .ov-cap { margin: 8px 0 0; font-size: .8rem; max-width: 900px; }
+@media (max-width: 560px) {
+  .ex-body table th:first-child, .ex-body table td:first-child { position: sticky; left: 0; background: var(--card); z-index: 1; box-shadow: 1px 0 0 var(--line); }
+  .ex-body tr.active td:first-child { background: var(--soft); box-shadow: inset 3px 0 0 var(--ink), 1px 0 0 var(--line); }
+}
+
+/* ---------- minimal redesign ---------- */
+.site-header { padding: 22px 0 12px; }
+.site-header .topbar { align-items: flex-start; }
+.site-header h1 { margin: .15rem 0 .6rem; }
+.site-header .toc { margin-top: 2px; }
+section { padding: 28px 0 4px; }
+.examples { margin-top: 10px; }
+.ex-body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 460px); grid-template-areas: "ctl geo" "tbl tbl";
+  gap: 14px 28px; padding: 14px 16px 16px; align-items: start; }
+.ex-controls { grid-area: ctl; min-width: 0; }
+.geometry { grid-area: geo; margin: 0; min-width: 0; }
+.geometry svg { max-width: 460px; }
+.ex-metrics { grid-area: tbl; min-width: 0; }
+@media (max-width: 820px) { .ex-body { grid-template-columns: minmax(0, 1fr); grid-template-areas: "ctl" "geo" "tbl"; } }
+.ex-desc { margin: 0 0 8px; }
+.listen-note { margin: 0 0 10px; font-size: .86rem; color: var(--ink2); background: var(--soft); border-radius: 6px; padding: 6px 10px; }
+.listen-note .sep { color: var(--muted); }
+.target-row { margin: 0 0 6px; }
+
+/* one playback row per signal */
+.arow { display: grid; grid-template-columns: 34px minmax(150px, 210px) minmax(0, 1fr) auto; align-items: center; gap: 4px 10px;
+  padding: 5px 8px; border-radius: 8px; border: 1px solid transparent; }
+.arow + .arow { margin-top: 2px; }
+.arow.playing { background: var(--soft); border-color: var(--ink2); }
+.aplay { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); color: var(--ink);
+  display: grid; place-items: center; cursor: pointer; padding: 0; }
+.aplay svg { width: 14px; height: 14px; }
+.arow.playing .aplay { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.aplay:disabled { opacity: .4; cursor: default; }
+.alabel { display: inline-flex; align-items: center; gap: 6px; font-size: .9rem; font-weight: 600; min-width: 0; }
+.alabel span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.aseek { width: 100%; accent-color: var(--ink); min-width: 0; }
+.atime { font-family: var(--mono); font-size: .78rem; color: var(--ink2); white-space: nowrap; }
+@media (max-width: 560px) {
+  .arow { grid-template-columns: 34px minmax(0, 1fr) auto; grid-template-areas: "btn lab time" "btn seek seek"; }
+  .aplay { grid-area: btn; } .alabel { grid-area: lab; } .atime { grid-area: time; } .aseek { grid-area: seek; }
+}
+.player .group-label { margin: 10px 0 2px; }
+.player details.more { margin-top: 6px; }
+.loud { display: inline-flex; gap: 6px; align-items: center; font-size: .85rem; color: var(--ink2); margin-top: 8px; cursor: pointer; }
+
+/* results */
+.overall .table-wrap { margin: 6px 0 14px; }
+.plot .controls { margin: 0 0 8px; }
+.chart-grid { margin-top: 4px; }
+
+/* collapsed protocol */
+details.protocol summary { cursor: pointer; list-style: none; display: flex; align-items: center; gap: 8px; }
+details.protocol summary::-webkit-details-marker { display: none; }
+details.protocol summary::before { content: "▸"; color: var(--muted); transition: transform .15s; }
+details.protocol[open] summary::before { transform: rotate(90deg); }
+details.protocol summary h2 { margin: 0; font-size: 1.15rem; }
+@media (max-width: 560px) {
+  .arow { grid-template-columns: 34px minmax(0, 1fr) auto; grid-template-areas: "btn lab lab" "btn seek time"; }
+  .alabel span { white-space: normal; }
+}
+.pesq-row th, .pesq-row td { text-align: center; } .pesq-row th:first-child { text-align: left; }

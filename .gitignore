@@ -32,3 +32,6 @@ shots*/
 *.png
 ffprof-*/
 browser_report.json
+
+# Generated offline results (tools/make_results.py): plots are committed
+!results/plots/*.png
