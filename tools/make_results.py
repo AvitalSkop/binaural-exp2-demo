@@ -51,9 +51,8 @@ for d in (ROOT / "examples", ROOT / "results"):
 ov = results["overall"]["values"]
 (ROOT / "results/tables/overall.txt").write_text(
     f"Overall results (valgrid, {vg['n_mixtures']} mixtures / {vg['n_requests']} target requests, 160,000 training steps)\n{NOTE}\n" +
-    table(["Model", "SI-SDR", "SI-SDRi", "SI-SIR", "SI-SAR", "Target selected", "Both targets"],
-          [[f"{k} {NAMES[k]}", num(ov[k]["si_sdr"]), sgn(ov[k]["si_sdri"]), num(ov[k]["si_sir"]), num(ov[k]["si_sar"]),
-            pct(ov[k]["success"]), pct(ov[k]["W"])] for k in ORDER]) + "\n")
+    table(["Model", "SI-SDR", "SI-SDRi", "SI-SIR", "SI-SAR"],
+          [[f"{k} {NAMES[k]}", num(ov[k]["si_sdr"]), sgn(ov[k]["si_sdri"]), num(ov[k]["si_sir"]), num(ov[k]["si_sar"])] for k in ORDER]) + "\n")
 pq = results["pesq"]["values"]
 (ROOT / "results/tables/pesq.txt").write_text(
     f"PESQ (valsep64, {vs['n_mixtures']} mixtures / {vs['n_requests']} target requests, 160,000 steps; {results['pesq']['mode']})\n{NOTE}\n" +
@@ -116,22 +115,21 @@ for e in examples:
     txt = [f"Example {e['id']}: {e['title']}", e["description"], "",
            f"s1 at {e['azimuth']['s1']:+g} deg, s2 at {e['azimuth']['s2']:+g} deg (0 = front, positive = right), separation {e['separation_deg']} deg."]
     if e.get("listening"):
-        txt.append("Listening review: " + ", ".join(f"{t} {v}" for t, v in e["listening"].items()) +
-                   ". The 'Target selected' column is the objective criterion.")
+        txt.append("Listening review: " + ", ".join(f"{t} {v}" for t, v in e["listening"].items()) + ".")
     idx.append(f"## {e['id']}: {e['title']}\n\n{e['description']}\n")
     idx.append(f"s1 at {e['azimuth']['s1']:+g}°, s2 at {e['azimuth']['s2']:+g}°, separation {e['separation_deg']}°. "
                f"Metric tables: [ex{e['id']}.txt](ex{e['id']}.txt)\n")
     if e.get("listening"):
-        idx.append("Listening review: " + ", ".join(f"{t} {v}" for t, v in e["listening"].items()) + "; see the table for the objective criterion.\n")
+        idx.append("Listening review: " + ", ".join(f"{t} {v}" for t, v in e["listening"].items()) + ".\n")
     for t in ("s1", "s2"):
         o = "s2" if t == "s1" else "s1"
         x = e["targets"][t]
         txt += ["", f"Requested {t} at {x['azimuth']:+g} deg, initial target SIR {x['input_sir_db']:+.1f} dB",
-                table(["Signal", "SI-SDR", "SI-SDRi", "SI-SIR", "SI-SAR", "PESQ", "Target selected"],
-                      [["Mixture", num(x["mixture_si_sdr"], 1), "-", "-", "-", num(x["mixture_pesq"]), "-"],
-                       ["Reverberant target", "-", "-", "-", "-", num(x["reverberant_pesq"]), "-"]] +
+                table(["Signal", "SI-SDR", "SI-SDRi", "SI-SIR", "SI-SAR", "PESQ"],
+                      [["Mixture", num(x["mixture_si_sdr"], 1), "-", "-", "-", num(x["mixture_pesq"])],
+                       ["Reverberant target", "-", "-", "-", "-", num(x["reverberant_pesq"])]] +
                       [[f"{k} {NAMES[k]}", num(x["models"][k]["si_sdr"], 1), sgn(x["models"][k]["si_sdri"], 1), num(x["models"][k]["si_sir"], 1),
-                        num(x["models"][k]["si_sar"], 1), num(x["models"][k]["pesq"]), "yes" if x["models"][k]["success"] else "no"] for k in shown])]
+                        num(x["models"][k]["si_sar"], 1), num(x["models"][k]["pesq"])] for k in shown])]
         links = [("Mixture", a["mixture"]), (f"Target {t} near-anechoic", a[f"clean_{t}"])] + \
                 [(f"{k} {NAMES[k]}", a[f"{k}_{t}"]) for k in shown] + \
                 [(f"Target {t} reverberant", a[f"rev_{t}"]), (f"Interferer {o} near-anechoic", a[f"clean_{o}"]), (f"Interferer {o} reverberant", a[f"rev_{o}"])]

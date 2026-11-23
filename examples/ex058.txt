@@ -4,20 +4,20 @@ FiLM (F) and Element-wise (E1) reconstruct both target speakers well.
 s1 at +50 deg, s2 at -20 deg (0 = front, positive = right), separation 70 deg.
 
 Requested s1 at +50 deg, initial target SIR -3.6 dB
-Signal              SI-SDR  SI-SDRi  SI-SIR  SI-SAR  PESQ  Target selected
-------------------  ------  -------  ------  ------  ----  ---------------
-Mixture              -10.4        -       -       -  1.08                -
-Reverberant target       -        -       -       -  1.28                -
-E1 Element-wise        3.4    +13.8    40.3     3.4  1.32              yes
-F FiLM                 4.2    +14.6    42.2     4.2  1.40              yes
+Signal              SI-SDR  SI-SDRi  SI-SIR  SI-SAR  PESQ
+------------------  ------  -------  ------  ------  ----
+Mixture              -10.4        -       -       -  1.08
+Reverberant target       -        -       -       -  1.28
+E1 Element-wise        3.4    +13.8    40.3     3.4  1.32
+F FiLM                 4.2    +14.6    42.2     4.2  1.40
 
 Requested s2 at -20 deg, initial target SIR +3.6 dB
-Signal              SI-SDR  SI-SDRi  SI-SIR  SI-SAR  PESQ  Target selected
-------------------  ------  -------  ------  ------  ----  ---------------
-Mixture               -7.1        -       -       -  1.06                -
-Reverberant target       -        -       -       -  1.18                -
-E1 Element-wise        5.1    +12.2    37.5     5.1  1.25              yes
-F FiLM                 6.0    +13.1    39.3     6.0  1.28              yes
+Signal              SI-SDR  SI-SDRi  SI-SIR  SI-SAR  PESQ
+------------------  ------  -------  ------  ------  ----
+Mixture               -7.1        -       -       -  1.06
+Reverberant target       -        -       -       -  1.18
+E1 Element-wise        5.1    +12.2    37.5     5.1  1.25
+F FiLM                 6.0    +13.1    39.3     6.0  1.28
 
 Metrics: binaural (both ears jointly), against the near-anechoic image of the requested speaker; SI metrics in dB.
 Development (cross-validation) split: speakers seen during training, unseen utterances and room. No held-out test results.

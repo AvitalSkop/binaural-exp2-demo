@@ -33,7 +33,6 @@
       "si_sdri": 11.46,
       "si_sir": 32.55,
       "si_sar": 3.5,
-      "success": true,
       "pesq": 2.03
      },
      "E1": {
@@ -41,7 +40,6 @@
       "si_sdri": 10.41,
       "si_sir": 33.53,
       "si_sar": 2.45,
-      "success": true,
       "pesq": 1.76
      }
     }
@@ -59,7 +57,6 @@
       "si_sdri": 14.35,
       "si_sir": 30.06,
       "si_sar": 1.26,
-      "success": true,
       "pesq": 1.34
      },
      "E1": {
@@ -67,7 +64,6 @@
       "si_sdri": 13.47,
       "si_sir": 30.62,
       "si_sar": 0.37,
-      "success": true,
       "pesq": 1.27
      }
     }
@@ -119,7 +115,6 @@
       "si_sdri": 10.86,
       "si_sir": 22.12,
       "si_sar": 0.34,
-      "success": true,
       "pesq": 1.19
      },
      "E1": {
@@ -127,7 +122,6 @@
       "si_sdri": 8.69,
       "si_sir": 18.7,
       "si_sar": -1.79,
-      "success": true,
       "pesq": 1.11
      }
     }
@@ -145,7 +139,6 @@
       "si_sdri": 7.56,
       "si_sir": 8.29,
       "si_sar": -2.67,
-      "success": true,
       "pesq": 1.09
      },
      "E1": {
@@ -153,7 +146,6 @@
       "si_sdri": 8.27,
       "si_sir": 9.69,
       "si_sar": -2.17,
-      "success": true,
       "pesq": 1.16
      }
     }
@@ -205,7 +197,6 @@
       "si_sdri": 9.09,
       "si_sir": 23.57,
       "si_sar": -0.95,
-      "success": true,
       "pesq": 1.26
      },
      "F": {
@@ -213,7 +204,6 @@
       "si_sdri": 11.4,
       "si_sir": 25.57,
       "si_sar": 1.36,
-      "success": true,
       "pesq": 1.5
      },
      "E1": {
@@ -221,7 +211,6 @@
       "si_sdri": 9.34,
       "si_sir": 17.93,
       "si_sar": -0.6,
-      "success": true,
       "pesq": 1.3
      }
     }
@@ -239,7 +228,6 @@
       "si_sdri": 9.26,
       "si_sir": 15.31,
       "si_sar": -1.13,
-      "success": true,
       "pesq": 1.27
      },
      "F": {
@@ -247,7 +235,6 @@
       "si_sdri": 10.63,
       "si_sir": 15.9,
       "si_sar": 0.24,
-      "success": true,
       "pesq": 1.29
      },
      "E1": {
@@ -255,7 +242,6 @@
       "si_sdri": 10.08,
       "si_sir": 17.14,
       "si_sar": -0.38,
-      "success": true,
       "pesq": 1.35
      }
     }
@@ -309,7 +295,6 @@
       "si_sdri": 10.5,
       "si_sir": 29.13,
       "si_sar": 3.61,
-      "success": true,
       "pesq": 1.82
      },
      "E1": {
@@ -317,7 +302,6 @@
       "si_sdri": 9.92,
       "si_sir": 29.44,
       "si_sar": 3.02,
-      "success": true,
       "pesq": 1.73
      }
     }
@@ -335,7 +319,6 @@
       "si_sdri": 12.85,
       "si_sir": 29.6,
       "si_sar": 1.4,
-      "success": true,
       "pesq": 1.73
      },
      "E1": {
@@ -343,7 +326,6 @@
       "si_sdri": 11.21,
       "si_sir": 30.34,
       "si_sar": -0.25,
-      "success": true,
       "pesq": 1.44
      }
     }
@@ -395,7 +377,6 @@
       "si_sdri": 14.59,
       "si_sir": 42.16,
       "si_sar": 4.16,
-      "success": true,
       "pesq": 1.4
      },
      "E1": {
@@ -403,7 +384,6 @@
       "si_sdri": 13.84,
       "si_sir": 40.34,
       "si_sar": 3.41,
-      "success": true,
       "pesq": 1.32
      }
     }
@@ -421,7 +401,6 @@
       "si_sdri": 13.05,
       "si_sir": 39.29,
       "si_sar": 5.99,
-      "success": true,
       "pesq": 1.28
      },
      "E1": {
@@ -429,7 +408,6 @@
       "si_sdri": 12.19,
       "si_sir": 37.51,
       "si_sar": 5.13,
-      "success": true,
       "pesq": 1.25
      }
     }
@@ -480,7 +458,6 @@
       "si_sdri": 12.23,
       "si_sir": 26.63,
       "si_sar": 3.52,
-      "success": true,
       "pesq": 1.36
      },
      "E1": {
@@ -488,7 +465,6 @@
       "si_sdri": 10.3,
       "si_sir": 20.85,
       "si_sar": 1.65,
-      "success": true,
       "pesq": 1.26
      }
     }
@@ -506,7 +482,6 @@
       "si_sdri": 6.48,
       "si_sir": 5.77,
       "si_sar": -1.88,
-      "success": true,
       "pesq": 1.07
      },
      "E1": {
@@ -514,7 +489,6 @@
       "si_sdri": 9.55,
       "si_sir": 16.66,
       "si_sar": -0.22,
-      "success": true,
       "pesq": 1.16
      }
     }
@@ -535,7 +509,7 @@
  {
   "id": "003",
   "title": "Failure despite favorable metrics",
-  "description": "Neither target speaker is extracted successfully by listening, although for s1 the metrics indicate target selection.",
+  "description": "Neither target speaker is extracted successfully by listening, although some objective metrics are favorable for s1.",
   "models": [
    "F",
    "E1"
@@ -569,7 +543,6 @@
       "si_sdri": 6.57,
       "si_sir": 11.29,
       "si_sar": -2.02,
-      "success": true,
       "pesq": 1.16
      },
      "E1": {
@@ -577,7 +550,6 @@
       "si_sdri": 5.75,
       "si_sir": 5.62,
       "si_sar": -1.71,
-      "success": true,
       "pesq": 1.17
      }
     }
@@ -595,7 +567,6 @@
       "si_sdri": 3.92,
       "si_sir": -2.96,
       "si_sar": -1.58,
-      "success": false,
       "pesq": 1.05
      },
      "E1": {
@@ -603,7 +574,6 @@
       "si_sdri": 5.67,
       "si_sir": -0.84,
       "si_sar": -1.26,
-      "success": false,
       "pesq": 1.12
      }
     }

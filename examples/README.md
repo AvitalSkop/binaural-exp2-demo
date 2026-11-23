@@ -62,11 +62,11 @@ s1 at +15°, s2 at +25°, separation 10°. Metric tables: [ex006.txt](ex006.txt)
 
 ## 003: Failure despite favorable metrics
 
-Neither target speaker is extracted successfully by listening, although for s1 the metrics indicate target selection.
+Neither target speaker is extracted successfully by listening, although some objective metrics are favorable for s1.
 
 s1 at -10°, s2 at -5°, separation 5°. Metric tables: [ex003.txt](ex003.txt)
 
-Listening review: s1 not extracted, s2 not extracted; see the table for the objective criterion.
+Listening review: s1 not extracted, s2 not extracted.
 
 - Requested **s1**: [Mixture](../site/audio/ex003/mixture.wav) · [Target s1 near-anechoic](../site/audio/ex003/clean_s1.wav) · [E1 Element-wise](../site/audio/ex003/E1_s1.wav) · [F FiLM](../site/audio/ex003/F_s1.wav) · [Target s1 reverberant](../site/audio/ex003/rev_s1.wav) · [Interferer s2 near-anechoic](../site/audio/ex003/clean_s2.wav) · [Interferer s2 reverberant](../site/audio/ex003/rev_s2.wav)
 - Requested **s2**: [Mixture](../site/audio/ex003/mixture.wav) · [Target s2 near-anechoic](../site/audio/ex003/clean_s2.wav) · [E1 Element-wise](../site/audio/ex003/E1_s2.wav) · [F FiLM](../site/audio/ex003/F_s2.wav) · [Target s2 reverberant](../site/audio/ex003/rev_s2.wav) · [Interferer s1 near-anechoic](../site/audio/ex003/clean_s1.wav) · [Interferer s1 reverberant](../site/audio/ex003/rev_s1.wav)

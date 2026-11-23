@@ -168,6 +168,14 @@ async def run(url, out, dark, report):
                 await b.click(ctx, '#example-003 .arow[data-role="E1"] .aplay')
                 await asyncio.sleep(0.3)
                 st5 = await b.js(ctx, rowstate("#example-003"))
+                seek_js = """(() => { const s = document.querySelector('#example-041 .arow[data-role="int_rev"] .aseek'); s.value = '500';
+                    s.dispatchEvent(new Event('input')); return JSON.stringify(document.querySelector('#example-041 .arow[data-role="int_rev"] .atime').textContent); })()"""
+                seek_paused = await b.js(ctx, seek_js)
+                await b.click(ctx, '#example-041 .arow[data-role="int_rev"] .aplay')
+                await asyncio.sleep(0.6)
+                seek_play = await b.js(ctx, rowstate("#example-041"))
+                await b.click(ctx, '#example-041 .arow[data-role="int_rev"] .aplay')
+                report["seek"] = {"after_seek_paused": seek_paused, "after_play": {"playing": seek_play["playing"], "int_rev": seek_play["times"]["int_rev"]}}
                 await b.js(ctx, "document.querySelector('#example-041 thead .info').focus(), JSON.stringify('ok')")
                 await asyncio.sleep(0.2)
                 tipbox = await b.js(ctx, "JSON.stringify({visible: !document.getElementById('tipbox').hidden, text: document.getElementById('tipbox').textContent.slice(0, 60)})")

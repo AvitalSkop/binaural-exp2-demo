@@ -13,8 +13,6 @@
     "si_sdri": 7.1222,
     "si_sir": 15.7507,
     "si_sar": -0.7715,
-    "success": 0.8255,
-    "W": 0.6562,
     "n_mixtures": 192,
     "n_requests": 384
    },
@@ -23,8 +21,6 @@
     "si_sdri": 8.6832,
     "si_sir": 18.4952,
     "si_sar": 0.2172,
-    "success": 0.8906,
-    "W": 0.7865,
     "n_mixtures": 192,
     "n_requests": 384
    },
@@ -33,8 +29,6 @@
     "si_sdri": 8.2038,
     "si_sir": 16.6801,
     "si_sar": -0.2142,
-    "success": 0.8828,
-    "W": 0.776,
     "n_mixtures": 192,
     "n_requests": 384
    },
@@ -43,8 +37,6 @@
     "si_sdri": 7.7624,
     "si_sir": 17.5291,
     "si_sar": -0.1192,
-    "success": 0.8646,
-    "W": 0.7344,
     "n_mixtures": 192,
     "n_requests": 384
    },
@@ -53,8 +45,6 @@
     "si_sdri": 8.3901,
     "si_sir": 19.9859,
     "si_sar": -0.4204,
-    "success": 0.9193,
-    "W": 0.8438,
     "n_mixtures": 192,
     "n_requests": 384
    }

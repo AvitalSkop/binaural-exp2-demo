@@ -96,7 +96,8 @@ training = json.loads((SITE / "data/training.json").read_text())
 check(sorted(m["key"] for m in meta["models"]) == sorted(MODELS), "five models in data")
 check('MODEL_KEYS = ["B", "C", "D", "E1", "F"]' in (SITE / "assets/js/common.js").read_text(), "display order B, C, D, E1, F")
 text_all = [p.read_text() for p in files if p.suffix in (".js", ".css", ".html", ".json")]
-check(not any(k in t for t in text_all for k in ("★", "Suggested comparison", "featured", "FEATURED")), "no listening guidance")
+check(not any(k in t for t in text_all for k in ("★", "Suggested comparison", "featured", "FEATURED", "More references", "Target selected", "Both targets")),
+      "no listening guidance, no collapsed references, no selection columns")
 exp_text = [p.read_text() for p in exp_files if p.suffix in (".md", ".txt", ".svg")] + [(REPO / "README.md").read_text()]
 check(not any("Hadamard" in t for t in text_all + exp_text) and any("Element-wise" in t for t in text_all),
       "E1 shown as Element-wise everywhere (site, exports, README)")
@@ -129,23 +130,22 @@ for e in examples:
         ok &= -90 <= tt["azimuth"] <= 90 and finite(tt["input_sir_db"]) and finite(tt["mixture_si_sdr"]) and sorted(tt["models"]) == sorted(shown)
         for m in shown:
             r = tt["models"][m]
-            ok &= all(finite(r[k]) for k in ("si_sdr", "si_sdri")) and isinstance(r["success"], bool) and \
+            ok &= all(finite(r[k]) for k in ("si_sdr", "si_sdri")) and "success" not in r and \
                 all(r[k] is None or finite(r[k]) for k in ("si_sir", "si_sar"))
             ok &= abs((r["si_sdr"] - tt["mixture_si_sdr"]) - r["si_sdri"]) < 0.011 and 1.0 <= r["pesq"] <= 4.64
         ok &= all(1.0 <= tt[f] <= 4.64 for f in ("mixture_pesq", "reverberant_pesq"))
         check(ok, f"example {e['id']} {t}: geometry, metrics, SI-SDRi = SI-SDR - mixture")
     check(abs(e["targets"]["s1"]["input_sir_db"] + e["targets"]["s2"]["input_sir_db"]) < 0.011, f"example {e['id']}: s1/s2 SIRs opposite")
 ex003 = examples[-1]
-check(ex003["listening"] == {"s1": "not extracted", "s2": "not extracted"} and all(ex003["targets"]["s1"]["models"][m]["success"] for m in ex003["models"]),
-      "003: listening observation kept separate from the (favourable) objective s1 flags")
+check(ex003["listening"] == {"s1": "not extracted", "s2": "not extracted"}, "003: listening observation kept as its own field")
 
 # overall table and the two plots
 vg, vs = meta["sets"]["valgrid"], meta["sets"]["valsep64"]
 ov = results["overall"]
 check(ov["set"] == "valgrid" and ov["step"] == 160000 and sorted(ov["values"]) == sorted(MODELS) and
-      all(all(finite(v[k]) for k in ("si_sdr", "si_sdri", "si_sir", "si_sar", "success", "W")) and
-          (v["n_mixtures"], v["n_requests"]) == (vg["n_mixtures"], vg["n_requests"]) and 0 <= v["W"] <= v["success"] <= 1
-          for v in ov["values"].values()), "overall: valgrid 160k, five models, 192 / 384, W <= success")
+      all(sorted(v) == sorted(["si_sdr", "si_sdri", "si_sir", "si_sar", "n_mixtures", "n_requests"]) and
+          all(finite(v[k]) for k in ("si_sdr", "si_sdri", "si_sir", "si_sar")) and (v["n_mixtures"], v["n_requests"]) == (vg["n_mixtures"], vg["n_requests"])
+          for v in ov["values"].values()), "overall: valgrid 160k, five models, 192 / 384, SI metrics only (no selection rates)")
 pq = results["pesq"]
 check(pq["set"] == "valsep64" and all(1.0 <= pq["values"][k]["pesq"] <= 4.64 and pq["values"][k]["n_mixtures"] == vs["n_mixtures"]
       for k in MODELS + ["mixture", "reverberant_target"]), "PESQ table: valsep64, five models + mixture + reverberant target, within 1-4.64")
