@@ -99,7 +99,7 @@ async def run(url, out, dark, report):
             await b.cmd("browsingContext.setViewport", context=ctx, viewport={"width": w, "height": h})
             await b.cmd("browsingContext.navigate", context=ctx, url=url, wait="complete")
             for _ in range(100):
-                if await b.js(ctx, "document.querySelectorAll('details.example').length === 6 && !!document.querySelector('#chart-training svg') && !document.querySelector('#example-047 .aplay').disabled"):
+                if await b.js(ctx, "document.querySelectorAll('details.example').length === 5 && !!document.querySelector('#chart-training svg') && !document.querySelector('#example-047 .aplay').disabled"):
                     break
                 await asyncio.sleep(0.2)
             dom = await b.js(ctx, """JSON.stringify({

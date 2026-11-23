@@ -35,7 +35,7 @@ function renderExample(ex, allModels, open) {
   d.innerHTML = `<summary><span class="ex-id">${ex.id}</span><span class="ex-title">${ex.title}</span><span class="ex-tags">Δθ ${ex.separation_deg}°</span></summary>`;
   const body = h("div", { class: "ex-body" });
   const left = h("div", { class: "ex-controls" }), geo = h("figure", { class: "geometry" }), tableBox = h("div", { class: "ex-metrics" });
-  left.append(h("p", { class: "ex-desc" }, ex.description));
+  if (ex.description) left.append(h("p", { class: "ex-desc" }, ex.description));
   if (ex.listening) left.append(h("p", { class: "listen-note" },
     `<b>Listening:</b> ${Object.entries(ex.listening).map(([t, v]) => `${t} ${v}`).join(" · ")}`));
   const segBox = h("div", { class: "target-row" });

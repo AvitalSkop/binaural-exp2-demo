@@ -21,7 +21,7 @@ SITE = Path(sys.argv[1] if len(sys.argv) > 1 else Path(__file__).resolve().paren
 ALLOWED = {".html", ".css", ".js", ".json", ".wav", ".txt"}
 MAX_FILE, MAX_TOTAL = 25 * 2**20, 40 * 2**20
 MODELS = ["C", "F", "B", "D", "E1"]
-EXAMPLES = ["047", "058", "024", "041", "008", "006"]
+EXAMPLES = ["047", "058", "041", "008", "006"]
 STEPS = [20000, 40000, 80000, 120000, 160000]
 LEAKS = [rb"/home", rb"/tmp", rb"/mnt", rb"/srv", rb"runs/", rb"\.ckpt", rb"wsj0", rb"si_tr_s", rb"si_dt_", rb"si_et_",
          rb"@[a-z0-9-]+\.(com|org|ac\.il)", rb"GPU-[0-9a-f]{8}", rb"CATT_", rb"0_5s", rb"0_0s", rb"hadamard_e1", rb"wandb",
@@ -102,7 +102,8 @@ exp_text = [p.read_text() for p in exp_files if p.suffix in (".md", ".txt", ".sv
 check(not any("Hadamard" in t for t in text_all + exp_text) and any("Element-wise" in t for t in text_all),
       "E1 shown as Element-wise everywhere (site, exports, README)")
 check(meta["audio_status"] == "approved", "audio status = approved")
-check([e["id"] for e in examples] == EXAMPLES, "selected examples in order 047, 058, 024, 041, 008, 006")
+check([e["id"] for e in examples] == EXAMPLES, "selected examples in order 047, 058, 041, 008, 006")
+check(all(e["description"] == "" for e in examples), "no descriptive sentences under the example titles")
 
 # audio: only the shown signals, byte-identical, consistent per example
 sha = meta["audio_sha256"]
@@ -112,11 +113,10 @@ bad = [f for f in wavs if hashlib.sha256((SITE / f).read_bytes()).hexdigest() !=
 check(not bad, f"SHA-256 of every WAV matches meta.json {bad[:3]}")
 for e in examples:
     shown = e["models"]
-    check(set(shown) <= {"C", "F", "E1"} and {"F", "E1"} <= set(shown) and (("C" in shown) == (e["id"] == "024")),
-          f"example {e['id']}: shown models {shown} (F, E1; C only for 024)")
+    check(sorted(shown) == ["E1", "F"], f"example {e['id']}: shown models {shown} (F and E1 only)")
     a = e["audio"]
     want = {"mixture", "clean_s1", "clean_s2", "rev_s1", "rev_s2"} | {f"{m}_{t}" for m in shown for t in ("s1", "s2")}
-    check(set(a) == want and all(f.startswith(f"audio/ex{e['id']}/") for f in a.values()), f"example {e['id']}: {len(want)} signals (both targets), no B/D audio")
+    check(set(a) == want and all(f.startswith(f"audio/ex{e['id']}/") for f in a.values()), f"example {e['id']}: {len(want)} signals (both targets), no B/C/D audio")
     lengths = set()
     for f in a.values():
         info = wav_info((SITE / f).read_bytes())

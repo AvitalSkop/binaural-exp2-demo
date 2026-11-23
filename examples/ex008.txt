@@ -1,5 +1,4 @@
-Example 008: Target switching at 10° separation
-Target switching is achieved with only 10° angular separation, although some interference remains.
+Example 008: Target extraction at 10° separation
 
 s1 at -5 deg, s2 at +5 deg (0 = front, positive = right), separation 10 deg.
 

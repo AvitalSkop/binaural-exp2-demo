@@ -113,11 +113,11 @@ idx = [f"# Listening examples\n\nSelected examples (valsep64, 160,000 training s
 for e in examples:
     shown = [k for k in ORDER if k in e["models"]]
     a = e["audio"]
-    txt = [f"Example {e['id']}: {e['title']}", e["description"], "",
+    txt = [f"Example {e['id']}: {e['title']}"] + ([e["description"]] if e["description"] else []) + ["",
            f"s1 at {e['azimuth']['s1']:+g} deg, s2 at {e['azimuth']['s2']:+g} deg (0 = front, positive = right), separation {e['separation_deg']} deg."]
     if e.get("listening"):
         txt.append("Listening review: " + ", ".join(f"{t} {v}" for t, v in e["listening"].items()) + ".")
-    idx.append(f"## {e['id']}: {e['title']}\n\n{e['description']}\n")
+    idx.append(f"## {e['id']}: {e['title']}\n" + (f"\n{e['description']}\n" if e["description"] else ""))
     idx.append(f"s1 at {e['azimuth']['s1']:+g}°, s2 at {e['azimuth']['s2']:+g}°, separation {e['separation_deg']}°. "
                f"Metric tables: [ex{e['id']}.txt](ex{e['id']}.txt)\n")
     if e.get("listening"):
