@@ -1,6 +1,6 @@
 // Lightweight responsive SVG line chart: measured points only (marker per model, fixed colour + shape),
 // thin connecting lines between measured points, crosshair tooltip, data-table view. No interpolation, no CI bands.
-import { MARKERS, chip, color, fmt, h, markerPath } from "./common.js";
+import { MARKERS, chip, color, fmt, h, markerPath } from "./common.js?v=20261123b";
 
 function niceStep(raw) {
   const p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p;

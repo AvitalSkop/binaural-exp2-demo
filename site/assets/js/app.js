@@ -1,7 +1,7 @@
-import { MODEL_KEYS, chip, fmt, fmtDeg, h, info, initThemeToggle, initTips, legendHTML, segmented } from "./common.js";
-import { geometrySVG } from "./geometry.js";
-import { ExamplePlayer } from "./player.js";
-import { LineChart } from "./charts.js";
+import { MODEL_KEYS, chip, fmt, fmtDeg, h, info, initThemeToggle, initTips, legendHTML, segmented } from "./common.js?v=20261123b";
+import { geometrySVG } from "./geometry.js?v=20261123b";
+import { ExamplePlayer } from "./player.js?v=20261123b";
+import { LineChart } from "./charts.js?v=20261123b";
 
 const getJSON = async (p) => { const r = await fetch(p); if (!r.ok) throw new Error(`${p}: ${r.status}`); return r.json(); };
 
@@ -93,7 +93,7 @@ async function main() {
 
   const exBox = document.getElementById("examples");
   exBox.innerHTML = "";
-  examples.forEach((ex) => exBox.append(renderExample(ex, models, ex.id === "041")));
+  examples.forEach((ex, i) => exBox.append(renderExample(ex, models, i === 0)));
 
   // ---- results: overall table, then the two plots (all five models)
   document.getElementById("overall").innerHTML = overallTable(results.overall, models) + pesqTable(results.pesq, models);

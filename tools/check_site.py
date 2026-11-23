@@ -21,7 +21,7 @@ SITE = Path(sys.argv[1] if len(sys.argv) > 1 else Path(__file__).resolve().paren
 ALLOWED = {".html", ".css", ".js", ".json", ".wav", ".txt"}
 MAX_FILE, MAX_TOTAL = 25 * 2**20, 40 * 2**20
 MODELS = ["C", "F", "B", "D", "E1"]
-EXAMPLES = ["041", "008", "024", "047", "058", "006", "003"]
+EXAMPLES = ["047", "058", "024", "041", "008", "006"]
 STEPS = [20000, 40000, 80000, 120000, 160000]
 LEAKS = [rb"/home", rb"/tmp", rb"/mnt", rb"/srv", rb"runs/", rb"\.ckpt", rb"wsj0", rb"si_tr_s", rb"si_dt_", rb"si_et_",
          rb"@[a-z0-9-]+\.(com|org|ac\.il)", rb"GPU-[0-9a-f]{8}", rb"CATT_", rb"0_5s", rb"0_0s", rb"hadamard_e1", rb"wandb",
@@ -102,7 +102,7 @@ exp_text = [p.read_text() for p in exp_files if p.suffix in (".md", ".txt", ".sv
 check(not any("Hadamard" in t for t in text_all + exp_text) and any("Element-wise" in t for t in text_all),
       "E1 shown as Element-wise everywhere (site, exports, README)")
 check(meta["audio_status"] == "approved", "audio status = approved")
-check([e["id"] for e in examples] == EXAMPLES, "seven selected examples in order")
+check([e["id"] for e in examples] == EXAMPLES, "selected examples in order 047, 058, 024, 041, 008, 006")
 
 # audio: only the shown signals, byte-identical, consistent per example
 sha = meta["audio_sha256"]
@@ -136,8 +136,6 @@ for e in examples:
         ok &= all(1.0 <= tt[f] <= 4.64 for f in ("mixture_pesq", "reverberant_pesq"))
         check(ok, f"example {e['id']} {t}: geometry, metrics, SI-SDRi = SI-SDR - mixture")
     check(abs(e["targets"]["s1"]["input_sir_db"] + e["targets"]["s2"]["input_sir_db"]) < 0.011, f"example {e['id']}: s1/s2 SIRs opposite")
-ex003 = examples[-1]
-check(ex003["listening"] == {"s1": "not extracted", "s2": "not extracted"}, "003: listening observation kept as its own field")
 
 # overall table and the two plots
 vg, vs = meta["sets"]["valgrid"], meta["sets"]["valsep64"]
@@ -168,9 +166,11 @@ check(all([x["mixture_si_sdr"] for x in bl[m]] == [x["mixture_si_sdr"] for x in 
 # references and statements
 html = (SITE / "index.html").read_text()
 js = {p.name: p.read_text() for p in (SITE / "assets/js").glob("*.js")}
-refs = re.findall(r'(?:href|src)="(?!#|https?:|data:)([^"]+)"', html)
+refs = [r.split("?")[0] for r in re.findall(r'(?:href|src)="(?!#|https?:|data:)([^"]+)"', html)]
+vers = set(re.findall(r'\?v=([0-9a-z]+)"', html + "".join((SITE / "assets/js" / f).read_text() for f in ("app.js", "common.js", "player.js", "charts.js", "geometry.js"))))
+check(len(vers) == 1, f"one cache-busting asset version everywhere {sorted(vers)}")
 check(all((SITE / r).exists() for r in refs), f"index.html references exist {refs}")
-imports = [(n, i) for n, t in js.items() for i in re.findall(r'from "\./([^"]+)"', t)]
+imports = [(n, i.split("?")[0]) for n, t in js.items() for i in re.findall(r'from "\./([^"]+)"', t)]
 check(all((SITE / "assets/js" / i).exists() for _, i in imports), "JS module imports resolve")
 check('name="robots" content="noindex' in html and (SITE / "robots.txt").exists(), "preview is noindex (meta + robots.txt)")
 text = html + "".join(js.values())
