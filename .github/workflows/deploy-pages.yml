@@ -1,4 +1,6 @@
 # Deploy the static demo (site/ only) to GitHub Pages. site/index.html becomes the site root.
+# Two jobs: build (validate + upload the Pages artifact) and deploy (needs build). The short wait before deploying
+# avoids a race in which deploy-pages could not yet see the freshly uploaded artifact ("No artifacts named github-pages").
 name: Deploy GitHub Pages
 
 on:
@@ -16,11 +18,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -35,6 +34,16 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Wait for the artifact to become available
+        run: sleep 45
 
       - name: Deploy
         id: deployment
