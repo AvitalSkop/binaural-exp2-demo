@@ -2,7 +2,7 @@
 // plays at a time on the whole page. Default = the files as exported (one common gain per example, both ears);
 // "Loudness-matched" scales each signal to the example's median RMS (both ears), limited so no sample exceeds 0.98.
 // Web Audio is used because iOS ignores <audio>.volume.
-import { chip, fmtTime, h } from "./common.js?v=20261123b";
+import { chip, fmtTime, h } from "./common.js?v=20261124a";
 
 const FADE = 0.008;
 let ctx = null, master = null, active = null;

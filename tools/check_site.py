@@ -145,12 +145,15 @@ for e in examples:
 vg, vs = meta["sets"]["valgrid"], meta["sets"]["valsep64"]
 ov = results["overall"]
 check(ov["set"] == "valgrid" and ov["step"] == 160000 and sorted(ov["values"]) == sorted(MODELS) and
-      all(sorted(v) == sorted(["si_sdr", "si_sdri", "si_sir", "si_sar", "n_mixtures", "n_requests"]) and
-          all(finite(v[k]) for k in ("si_sdr", "si_sdri", "si_sir", "si_sar")) and (v["n_mixtures"], v["n_requests"]) == (vg["n_mixtures"], vg["n_requests"])
-          for v in ov["values"].values()), "overall: valgrid 160k, five models, 192 / 384, SI metrics only (no selection rates)")
-pq = results["pesq"]
-check(pq["set"] == "valsep64" and all(1.0 <= pq["values"][k]["pesq"] <= 4.64 and pq["values"][k]["n_mixtures"] == vs["n_mixtures"]
-      for k in MODELS + ["mixture", "reverberant_target"]), "PESQ table: valsep64, five models + mixture + reverberant target, within 1-4.64")
+      all(sorted(v) == sorted(["si_sdr", "si_sdri", "si_sir", "si_sar", "pesq", "n_mixtures", "n_requests"]) and
+          all(finite(v[k]) for k in ("si_sdr", "si_sdri", "si_sir", "si_sar")) and 1.0 <= v["pesq"] <= 4.64 and
+          (v["n_mixtures"], v["n_requests"]) == (vg["n_mixtures"], vg["n_requests"])
+          for v in ov["values"].values()), "overall: valgrid 160k, five models, 192 / 384, SI metrics + PESQ (no selection rates)")
+ref = ov["reference"]
+check(all(abs(ov["values"][m]["si_sdr"] - ov["values"][m]["si_sdri"] - ref["mixture"]["si_sdr"]) < 2e-3 for m in MODELS) and
+      all(1.0 <= ref[k]["pesq"] <= 4.64 for k in ("mixture", "reverberant_target")) and "wideband" in ov["pesq_mode"],
+      "overall reference rows: mixture SI-SDR = SI-SDR - SI-SDRi for every model; mixture / reverberant PESQ within 1-4.64")
+check("pesq" not in results, "no separate valsep64 PESQ table")
 b = results["input_sir"]
 check(b["set"] == "valgrid" and b["step"] == 160000 and len(b["bins"]) == 8 and all(len(b["values"][m]) == 8 for m in MODELS),
       "initial-SIR plot: valgrid 160k, 8 bins, every model")

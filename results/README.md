@@ -5,7 +5,6 @@ Generated from `site/data/*.json` by `tools/make_results.py`. Interactive versio
 - [`tables/overall.txt`](tables/overall.txt): overall results, valgrid, 160,000 steps.
 - [`tables/training.txt`](tables/training.txt): training progression, valsep64, measured checkpoints.
 - [`tables/initial_sir.txt`](tables/initial_sir.txt): performance vs initial target SIR, valgrid.
-- [`tables/pesq.txt`](tables/pesq.txt): wideband PESQ, valsep64, 160,000 steps.
 - [`plots/`](plots/): PNG and SVG of the two main plots for SI-SDR, SI-SDRi and SI-SIR.
 
 ![initial_sir_si_sdr.png](plots/initial_sir_si_sdr.png)

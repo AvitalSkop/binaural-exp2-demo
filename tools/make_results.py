@@ -49,15 +49,14 @@ for d in (ROOT / "examples", ROOT / "results"):
 
 # ------------------------------------------------------------------ results/tables
 ov = results["overall"]["values"]
+ref = results["overall"]["reference"]
 (ROOT / "results/tables/overall.txt").write_text(
-    f"Overall results (valgrid, {vg['n_mixtures']} mixtures / {vg['n_requests']} target requests, 160,000 training steps)\n{NOTE}\n" +
-    table(["Model", "SI-SDR", "SI-SDRi", "SI-SIR", "SI-SAR"],
-          [[f"{k} {NAMES[k]}", num(ov[k]["si_sdr"]), sgn(ov[k]["si_sdri"]), num(ov[k]["si_sir"]), num(ov[k]["si_sar"])] for k in ORDER]) + "\n")
-pq = results["pesq"]["values"]
-(ROOT / "results/tables/pesq.txt").write_text(
-    f"PESQ (valsep64, {vs['n_mixtures']} mixtures / {vs['n_requests']} target requests, 160,000 steps; {results['pesq']['mode']})\n{NOTE}\n" +
-    table(["Signal", "PESQ"], [[f"{k} {NAMES[k]}", num(pq[k]["pesq"])] for k in ORDER] +
-          [["Mixture", num(pq["mixture"]["pesq"])], ["Reverberant target", num(pq["reverberant_target"]["pesq"])]]) + "\n")
+    f"Overall results (valgrid, {vg['n_mixtures']} mixtures / {vg['n_requests']} target requests, 160,000 training steps)\n{NOTE}"
+    f"PESQ: {results['overall']['pesq_mode']}.\n\n" +
+    table(["Model", "SI-SDR", "SI-SDRi", "SI-SIR", "SI-SAR", "PESQ"],
+          [[f"{k} {NAMES[k]}", num(ov[k]["si_sdr"]), sgn(ov[k]["si_sdri"]), num(ov[k]["si_sir"]), num(ov[k]["si_sar"]), num(ov[k]["pesq"])] for k in ORDER] +
+          [["Mixture", num(ref["mixture"]["si_sdr"]), "-", "-", "-", num(ref["mixture"]["pesq"])],
+           ["Reverberant target", "-", "-", "-", "-", num(ref["reverberant_target"]["pesq"])]]) + "\n")
 
 
 def block_tables(values, xs, xlabel):
@@ -146,7 +145,6 @@ pngs = sorted(p.name for p in (ROOT / "results/plots").glob("*.png"))
      "- [`tables/overall.txt`](tables/overall.txt): overall results, valgrid, 160,000 steps.",
      "- [`tables/training.txt`](tables/training.txt): training progression, valsep64, measured checkpoints.",
      "- [`tables/initial_sir.txt`](tables/initial_sir.txt): performance vs initial target SIR, valgrid.",
-     "- [`tables/pesq.txt`](tables/pesq.txt): wideband PESQ, valsep64, 160,000 steps.",
      "- [`plots/`](plots/): PNG and SVG of the two main plots for SI-SDR, SI-SDRi and SI-SIR.\n"] +
     [f"![{n}](plots/{n})" for n in pngs]) + "\n")
-print(f"examples/: README.md + {len(examples)} txt; results/tables: 4 txt; results/plots: {len(pngs)} png + {len(pngs)} svg")
+print(f"examples/: README.md + {len(examples)} txt; results/tables: 3 txt; results/plots: {len(pngs)} png + {len(pngs)} svg")

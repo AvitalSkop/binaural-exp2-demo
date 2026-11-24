@@ -264,7 +264,6 @@ details.protocol summary h2 { margin: 0; font-size: 1.15rem; }
   .arow { grid-template-columns: 34px minmax(0, 1fr) auto; grid-template-areas: "btn lab lab" "btn seek time"; }
   .alabel span { white-space: normal; }
 }
-.pesq-row th, .pesq-row td { text-align: center; } .pesq-row th:first-child { text-align: left; }
 
 /* dashboard-style player cards: one card per signal, own play/pause, seek, elapsed / duration */
 .agrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
