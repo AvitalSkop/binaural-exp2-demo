@@ -18,7 +18,7 @@ venv/
 *.local
 *.local.*
 
-# Private material: never in this repository (export tooling, evidence audit, research outputs)
+# Never committed: non-public tooling and research outputs
 *private*/
 export_demo.py
 consistency_report.json

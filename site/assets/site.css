@@ -1,4 +1,4 @@
-/* Tokens. Model colours = the internal Listening Explorer palette (same in light and dark); every model also has a
+/* Tokens. Model colours are the same in light and dark; every model also has a
    fixed marker shape, so identity never depends on colour alone. */
 :root {
   --bg: #fcfcfb; --card: #ffffff; --ink: #1c1c1a; --ink2: #4f4f49; --muted: #7c7c75; --line: #e3e3de;
@@ -265,7 +265,7 @@ details.protocol summary h2 { margin: 0; font-size: 1.15rem; }
   .alabel span { white-space: normal; }
 }
 
-/* dashboard-style player cards: one card per signal, own play/pause, seek, elapsed / duration */
+/* player cards: one card per signal, own play/pause, seek, elapsed / duration */
 .agrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
 @media (max-width: 560px) { .agrid { grid-template-columns: minmax(0, 1fr); } }
 .agrid .arow, .agrid .arow + .arow { margin: 0; }

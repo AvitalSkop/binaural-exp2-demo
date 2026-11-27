@@ -1,4 +1,4 @@
-// One playback row per signal (play/pause, seek, time), like the original Experiment 2 dashboard. Only one signal
+// One playback row per signal (play/pause, seek, time). Only one signal
 // plays at a time on the whole page. Default = the files as exported (one common gain per example, both ears);
 // "Loudness-matched" scales each signal to the example's median RMS (both ears), limited so no sample exceeds 0.98.
 // Web Audio is used because iOS ignores <audio>.volume.

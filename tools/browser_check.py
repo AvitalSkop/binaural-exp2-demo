@@ -111,8 +111,7 @@ async def run(url, out, dark, report):
                 trainMarkers: document.querySelectorAll('#chart-training .pt').length,
                 sirMarkers: document.querySelectorAll('#chart-sir .pt').length,
                 loaded: !document.querySelector('#example-047 .aplay').disabled,
-                rows041: [...document.querySelectorAll('#example-047 .arow')].map(r => r.dataset.role).join(' '),
-                rows024: [...document.querySelectorAll('#example-024 .arow')].map(r => r.dataset.role).join(' '),
+                rows047: [...document.querySelectorAll('#example-047 .arow')].map(r => r.dataset.role).join(' '),
                 bdRows: document.querySelectorAll('.arow[data-role="B"], .arow[data-role="D"]').length,
                 hscroll: document.documentElement.scrollWidth > window.innerWidth + 1,
                 overflow: [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > window.innerWidth + 1 && !e.closest('.table-wrap'))
@@ -126,7 +125,7 @@ async def run(url, out, dark, report):
                 overallHeads: [...document.querySelectorAll('.tbl-h')].map(x => x.textContent.trim()),
                 overallCols: document.querySelectorAll('.overall-table thead th').length,
                 protocolOpen: document.querySelector('details.protocol').open,
-                note003: (document.querySelector('#example-006 .listen-note') || {}).textContent || null,
+                note006: (document.querySelector('#example-006 .listen-note') || {}).textContent || null,
                 geoWidth: Math.round(document.querySelector('#example-047 .geometry svg').getBoundingClientRect().width) })""")
             report[f"{mode}/{name}/dom"] = dom
             if name == "desktop" and not dark:
